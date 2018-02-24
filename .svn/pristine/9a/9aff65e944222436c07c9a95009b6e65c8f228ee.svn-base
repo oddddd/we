@@ -1,0 +1,382 @@
+<?php
+
+/**
+ * 数据
+ */
+class Api_BackData extends PhalApi_Api
+{
+    public function getRules()
+    {
+        return array(
+            'getList' => [
+            ],
+            'UpMatchDetail' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '比赛id'],
+                'homePoint' => ['name' => 'homePoint', 'type' => 'int', 'require' => false,'desc' => '主队得分'],
+                'awayPoint' => ['name' => 'awayPoint', 'type' => 'int', 'require' => false,'desc' => '客队得分'],
+                'homeLike' => ['name' => 'homeLike', 'type' => 'int', 'require' => false,'desc' => '主队点赞人数'],
+                'awayLike' => ['name' => 'awayLike', 'type' => 'int', 'require' => false,'desc' => '客队点赞人数'],
+                'isEnd' => ['name' => 'isEnd', 'type' => 'int', 'require' => false,'desc' => '是否结束'],
+                'liveNum' => ['name' => 'liveNum', 'type' => 'int', 'require' => false,'desc' => '观看直播人数'],
+                'liveName' => ['name' => 'liveName', 'type' => 'string','min' => 1,'max' => 50,'require' => false,'desc' => '直播名字'],
+                'liveId' => ['name' => 'liveId', 'type' => 'int', 'require' => false,'desc' => '直播Id'],
+                'homeWin' => ['name' => 'homeWin', 'type' => 'int', 'require' => false,'desc' => '主队胜率 3个胜率加起来为100 如果传了一个都要传没有传0'],
+                'awayWin' => ['name' => 'awayWin', 'type' => 'int', 'require' => false,'desc' => '客队胜率'],
+                'deuce' => ['name' => 'deuce', 'type' => 'int', 'require' => false,'desc' => '和局胜率'],
+            ],
+            'pushBespeak' =>[
+            ],
+            'getMatchNews' =>[
+            ],
+            'insertComment' => [
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true,'desc' => '比赛id'],
+                'comment' => ['name' => 'comment', 'type' => 'string', 'require' => true, 'min' => 1,'max' => 200, 'desc' => '评论内容'],
+            ],
+            'SetAdvertisingSwitch'=>[
+                'configData' => ['name' => 'configData', 'type' => 'int', 'require' => true,'desc' => '1开启竞彩模块 2关闭竞彩模块'],
+            ],
+            'insertAdvertising' => [
+                'title' => ['name' => 'title', 'type' => 'string', 'require' => false, 'desc' => '广告标题'],
+                'content' => ['name' => 'content', 'type' => 'string', 'require' => false, 'desc' => '广告标题'],
+                'imgUrl' => ['name' => 'imgUrl', 'type' => 'string', 'require' => true, 'desc' => '图片地址'],
+                'url' => ['name' => 'url', 'type' => 'string', 'require' => false, 'desc' => '打开参数'],
+                'type'=>['name'=>'type','type'=>'int', 'require' => true,'desc'=>'类型 1咨询 2赛事 3网页'],
+                'position' => ['name' => 'position', 'type' => 'string', 'require' => true, 'desc' => '入口位置 1 咨询详情广告 2 赛事竞猜广告 3 退出app广告 4咨询列表随机广告'],
+                'top'=>['name'=>'top','type'=>'int', 'require' => false,'desc'=>'排序越大越上面'],
+            ],
+            'updateAdvertising' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '广告id'],
+                'title' => ['name' => 'title', 'type' => 'string', 'require' => false, 'desc' => '广告标题'],
+                'content' => ['name' => 'content', 'type' => 'string', 'require' => false, 'desc' => '广告标题'],
+                'imgUrl' => ['name' => 'imgUrl', 'type' => 'string', 'require' => true, 'desc' => '图片地址'],
+                'url' => ['name' => 'url', 'type' => 'string', 'require' => false, 'desc' => '打开参数'],
+                'type'=>['name'=>'type','type'=>'int', 'require' => true,'desc'=>'类型 1咨询 2赛事 3网页'],
+                'position' => ['name' => 'position', 'type' => 'string', 'require' => true, 'desc' => '入口位置 1 咨询详情广告 2 赛事竞猜广告 3 退出app广告 4咨询列表随机广告'],
+                'top'=>['name'=>'top','type'=>'int', 'require' => false,'desc'=>'排序越大越上面'],
+            ],
+            'deleteAdvertising' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '广告id'],
+            ],
+            'AdvertisingLog' => [
+                'fid' => ['name' => 'fid','type' => 'int', 'require' => true, 'desc' => '广告id'],
+            ],
+            'AdvertisingList' => [
+            ],
+            'setAbout' => [
+                'configData' => ['name' => 'configData','type' => 'string', 'require' => true, 'desc' => '关于富文本'],
+            ],
+            'getMatchData' => [
+            ],
+            'getMatchTeamData' => [
+            ],
+            'getLiveStreamList' => [
+            ],
+            'makeLiveStreamBind' => [
+                'liveUrl' => ['name' => 'liveUrl','type' => 'string', 'require' => true, 'desc' => '直播流地址'],
+                'liveName' => ['name' => 'liveName','type' => 'string', 'require' => true, 'desc' => '直播名称'],
+                'fid' => ['name' => 'fid','type' => 'int', 'require' => true, 'desc' => '比赛id'],
+            ],
+            'deleteLiveStreamBind' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '流绑定id'],
+            ],
+            'MatchListBefore'=>[
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+                'leagueType' => ['name' => 'leagueType', 'type' => 'int', 'require' => true,'desc' => '1足球2篮球'],
+            ],
+            'MatchListAfter'=>[
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+                'leagueType' => ['name' => 'leagueType', 'type' => 'int', 'require' => true,'desc' => '1足球2篮球'],
+            ],
+            'MatchCommentList'=>[
+                'beforeTime' => ['name' => 'beforeTime', 'type' => 'string', 'require' => false,'desc' => '获取历史的数据 时间一次只能传一个'],
+                'afterTime' => ['name' => 'afterTime', 'type' => 'string', 'require' => false,'desc' => '获取最新的数据 时间一次只能传一个'],
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => false,'desc' => '页码第一页传1'],
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true,'desc' => '赛事id'],
+                'type' => ['name' => 'type', 'type' => 'int', 'require' => false,'desc' => '1看用户 2看主持人'],
+            ],
+        );
+    }
+
+    /**
+     * 更新赛事
+     * @desc wjp 2018-1-12
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getList(){
+        $domain = new Domain_WeData();
+        $domain -> jczq();
+        $domain -> jcnq();
+        $ret = DI()->ResCode->get("WE.Success");
+        return $ret;
+    }
+
+    /**
+     * 赛事补充数据
+     * @desc wjp 2018-1-12
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function UpMatchDetail(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        if(isset($this->homeWin) || isset($this->awayWin) || isset($this->deuce))
+        {
+            if(!isset($this->homeWin) || !isset($this->awayWin) || !isset($this->deuce) || $this->homeWin + $this->awayWin + $this->deuce != 100){
+                return DI()->ResCode->get("WE.lostError");
+            }
+        }
+        $domain -> UpMatchDetail($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        return $ret;
+    }
+
+    /**
+     * 爬篮球历史数据
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getMatchData(){
+        $domain = new Domain_WeData();
+        $date = date("Y-m-d",strtotime("-1 day"));
+        $matchList = DI()->matchPs -> getNBAList($date);
+        $domain -> getMatchIdListByNBA($matchList);
+        return DI()->ResCode->get("WE.Success");
+    }
+
+    /**
+     * 爬篮球历史数据
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getMatchTeamData(){
+        $domain = new Domain_WeData();
+        $domain -> getNbaMatchTeamData();
+        return DI()->ResCode->get("WE.Success");
+    }
+
+    /**
+     * 获得爆料
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-17
+     */
+    public function getMatchNews(){
+        $domain = new Domain_WeData();
+        $domain -> getMatchNews();
+        $ret = DI() -> ResCode -> get("WE.Success");
+        return $ret;
+    }
+
+    /**
+     * 推送预约
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-17
+     */
+    public function pushBespeak(){
+        $dataDomain = new Domain_WeData();
+        $dataDomain -> PushBespeakList();
+        $ret = DI() -> ResCode -> get("WE.Success");
+        return $ret;
+    }
+
+    /**
+     * 发送评论
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function insertComment(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeData();
+        $rolerCode = DI()->Ruler->Roler($data['comment']);
+        if($rolerCode == -100)
+            return DI()->ResCode->get("WE.rulerError");
+
+        //主持人id
+        $data['userId'] = DI()->user['id'];
+        $data['type'] = 2;
+        $code = $domain -> insertComment($data);
+        if($code != null && $code != 0 )
+            return DI()->ResCode->get("WE.Success");
+        return DI()->ResCode->get("WE.Error");
+    }
+
+
+    /**
+     * 广告开关开启关闭
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-01-19
+     */
+    public function SetAdvertisingSwitch(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeData();
+        $list = $domain->SetAdvertisingSwitch($data);
+        if($list == null)
+            return DI()->ResCode->get("WE.lostError");
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 新建广告
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertAdvertising(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $userInfo = $domain -> insertAdvertising($allParams);
+        if($userInfo != null)
+            return DI()->ResCode->get("WE.Success");
+        return DI()->ResCode->get("WE.Error");
+    }
+
+
+    /**
+     * 修改广告
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateAdvertising(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $userInfo = $domain -> updateAdvertising($allParams);
+        if($userInfo != null)
+            return DI()->ResCode->get("WE.Success");
+        return DI()->ResCode->get("WE.Error");
+    }
+
+    /**
+     * 删除广告
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteAdvertising(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $domain -> deleteAdvertising($allParams);
+        return DI()->ResCode->get("WE.Success");
+    }
+
+    /**
+     * 广告统计
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function AdvertisingLog(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $domain -> addAdvertisingLog($allParams);
+        return DI()->ResCode->get("WE.Success");
+    }
+
+    /**
+     * 广告列表
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function AdvertisingList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $info = $domain -> AdvertisingList($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 关于修改保存
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function setAbout(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $domain -> setAbout($allParams);
+        return DI()->ResCode->get("WE.Success");
+    }
+
+    /**
+     * 直播流模板获取
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getLiveStreamList(){
+        $domain = new Domain_WeData();
+        $ret = $domain -> getLiveStreamList();
+        return $ret;
+    }
+
+    /**
+     * 直播绑定比赛
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function makeLiveStreamBind(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $ret = $domain -> makeLiveStreamBind($allParams);
+        return $ret;
+    }
+
+    /**
+     * 删除直播绑定比赛
+     * @desc wjp 2017-01-19
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteLiveStreamBind(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $ret = $domain -> deleteLiveStreamBind($allParams);
+        return $ret;
+    }
+
+    /**
+     * 赛事列表上拉
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function MatchListBefore(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $list = $domain->getMatchBefore($allParams);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 赛事列表下拉
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function MatchListAfter(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        $list = $domain->getMatchAfter($allParams);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 赛事评论列表
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function MatchCommentList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeData();
+        return $domain->BackMatchCommentList($allParams);
+    }
+}

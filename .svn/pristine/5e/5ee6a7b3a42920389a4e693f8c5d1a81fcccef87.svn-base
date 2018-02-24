@@ -1,0 +1,30 @@
+<?php
+/**
+ * 七牛接口调用
+ * 1、图片文件上传
+ * 2、获取Token
+ *
+ * @author: cnx7 <zysafe@live.cn> 2016-04-05
+ */
+
+require_once dirname(__FILE__) . '/autoload.php';
+use Qiniu\Auth;
+
+class Qiniu2_Lite
+{
+    public $auth = null;
+    public function __construct()
+    {
+        $this->auth = new Auth(DI()->get('app.Qiniu.accessKey'),DI()->get('app.Qiniu.secretKey'));
+
+    }
+    public function getuptoken(){
+        $expires = 7200;
+        $token = $this -> auth->uploadToken(DI()->get('app.Qiniu.space_bucket'),null,$expires);
+        return $token;
+    }
+    public function deleteData($key){
+        $token = $this -> auth->delete(DI()->get('app.Qiniu.space_bucket'),$key);
+        return $token;
+    }
+}

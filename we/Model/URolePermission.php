@@ -1,0 +1,128 @@
+<?php
+
+/**
+ * URolePermission.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_URolePermission extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'u_role_permission';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+    }
+
+    /**
+     * 获取用户信息
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getRole($data)
+    {
+        try {
+            $sql = "select * from u_role_permission where rid = {$data['rid']}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取用户信息
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getRoleByPid($data)
+    {
+        try {
+            $sql = "select * from u_role_permission where pid = {$data['pid']}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+
+    /**
+     * 获取用户信息
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getRoleHas($data)
+    {
+        try {
+            $sql = "select * from u_role_permission where rid = {$data['rid']} && pid = {$data['pid']}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertUserInfo($data)
+    {
+        try {
+            $sql = "insert into u_role_permission(`rid`,`pid`) VALUE ({$data['rid']},{$data['pid']})";
+            $user_info = $this->getORM()->queryAll($sql);
+            $this -> addLog($data['rid']);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 删除数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteUserInfo($data)
+    {
+        try {
+            $sql = "delete from u_role_permission where rid = {$data['rid']} && pid = {$data['pid']} ";
+            $user_info = $this->getORM()->queryAll($sql);
+            $this -> addLog($data['rid']);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

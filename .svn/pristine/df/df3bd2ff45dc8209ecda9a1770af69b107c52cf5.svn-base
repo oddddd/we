@@ -1,0 +1,25 @@
+DELIMITER $$
+
+USE `CM_SNS`$$
+
+DROP PROCEDURE IF EXISTS `CM_SNS_MicroblogCommentList`$$
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CM_SNS_MicroblogCommentList`(
+	IN _microblog_id INT,
+	IN _start INT,
+	IN _end INT
+	)
+BEGIN
+	SET @strSQL=CONCAT('
+	SELECT mc.id, mc.users_id, mc.reply_users_id, mc.comment_type, mc.context, mc.voice, mc.imgs, mc.createtime,
+	u.`nickname`, u.`img_url`, (SELECT nickname FROM users WHERE id=mc.reply_users_id) AS replyUserName
+	FROM microblog_comment AS mc INNER JOIN users AS u ON mc.users_id=u.`id`
+	WHERE mc.microblog_id=',_microblog_id,'
+	 ORDER BY createtime desc
+	Limit ',_start,',',_end);
+	PREPARE strSQL FROM @strSQL;
+	EXECUTE strSQL;
+	DEALLOCATE PREPARE strSQL;
+    END$$
+
+DELIMITER ;

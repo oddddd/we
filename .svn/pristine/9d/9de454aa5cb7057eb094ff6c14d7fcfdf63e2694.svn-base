@@ -1,0 +1,146 @@
+<?php
+
+/**
+ * UPermission.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_UPermission extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'u_permission';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+    }
+
+
+    /**
+     * 获取权限
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getRole($data)
+    {
+        try {
+            $sql = "select * from u_permission where id = {$data['id']}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取权限
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getRoleList($data)
+    {
+        try {
+            $sql = "select * from u_permission where id in ({$data['id']})";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取权限
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getAllRoleList()
+    {
+        try {
+            $sql = "select * from u_permission";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertUserInfo($data)
+    {
+        try {
+            $sql = "insert into u_permission(`url`,`name`) VALUE ('{$data['url']}','{$data['name']}')";
+            $user_info = $this->getORM()->queryAll($sql);
+            $this -> addLog($this->getORM()->insert_id());
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 修改数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateUserInfo($data)
+    {
+        try {
+            $sql = "update u_permission set `name` = '{$data['name']}',`url` = '{$data['url']}' where id = {$data['id']}";
+            $user_info = $this->getORM()->queryAll($sql);
+            $this -> addLog($data['id']);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 删除数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteUserInfo($data)
+    {
+        try {
+            $sql = "delete from u_permission where id = {$data['id']} ";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

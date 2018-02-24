@@ -1,0 +1,58 @@
+<?php
+/**
+ * WeBanner.php
+ */
+class Domain_WeBanner
+{
+    /**
+     * 获取轮换板
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function bannerList(){
+        $model = new Model_WeBanner();
+        $userInfo = $model -> getBannerList();
+        return $userInfo;
+    }
+
+    /**
+     * 修改轮换板
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateBanner($data){
+
+        $model = new Model_WeBanner();
+        $info= $model ->updateBanner($data);
+        $log = DI()->config->get("admin.adminLog");
+        if(isset($log[$_GET['service']])){
+            $logModel = new Model_ULog();
+            $log['uid'] = isset(DI()->user['id'])?DI()->user['id']:0;
+            $log['content'] = $log[$_GET['service']];
+            $log['api'] = $_GET['service'];
+            $log['pid'] = $data['id'];
+            $logModel -> insertInfo($log);
+        }
+        return $info;
+    }
+
+    /**
+     * 添加轮换板
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertBanner($data){
+        $model = new Model_WeBanner();
+        $info = $model -> insertBanner($data);
+        $log = DI()->config->get("admin.adminLog");
+        if(isset($log[$_GET['service']])){
+            $logModel = new Model_ULog();
+            $log['uid'] = isset(DI()->user['id'])?DI()->user['id']:0;
+            $log['content'] = $log[$_GET['service']];
+            $log['api'] = $_GET['service'];
+            $log['pid'] = $data['id'];
+            $logModel -> insertInfo($log);
+        }
+        return $info;
+    }
+}

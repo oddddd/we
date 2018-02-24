@@ -1,0 +1,51 @@
+DELIMITER $$
+
+USE `CM_SNS`$$
+
+DROP PROCEDURE IF EXISTS `CM_SNS_FansList`$$
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CM_SNS_FansList`(
+	IN _current_users_id INT,
+	IN _users_id INT,
+	IN _start INT,
+	IN _end INT)
+BEGIN
+
+	IF _users_id =_current_users_id THEN
+		SET @strSQL=CONCAT('
+			SELECT c.id, c.users_id, c.createtime,
+			u.nickname AS userName, u.sex AS userSex, u.img_url AS userImg,
+			p.id AS petId, p.name AS petName, p.ico AS petImg, p.sex AS petSex,
+			p.dogs_breed_id AS breedId, b.type_name AS breedName ,
+			(SELECT COUNT(id) FROM concern WHERE users_id =',_users_id,' AND concern_id=c.users_id) AS isConcern
+			FROM concern AS c INNER JOIN users AS u ON c.`concern_id`=u.`id`
+			INNER JOIN pets AS p ON p.`users_id`=c.`users_id`
+			INNER JOIN dogs_breed AS b ON p.`dogs_breed_id`=b.`id`
+			where c.concern_id=',_users_id,'
+			 GROUP BY c.id
+			 ORDER BY c.`createtime` DESC, p.createtime ASC
+			 Limit ',_start,',',_end);
+
+	ELSE
+		SET @strSQL=CONCAT('
+			SELECT c.id, c.users_id, c.createtime,
+			u.nickname AS userName, u.sex AS userSex, u.img_url AS userImg,
+			p.id AS petId, p.name AS petName, p.ico AS petImg, p.sex AS petSex,
+			p.dogs_breed_id AS breedId, b.type_name AS breedName ,
+			IF(c.users_id=',_current_users_id,', -1, (SELECT COUNT(id) FROM concern WHERE concern_id=',_current_users_id,' and users_id=c.users_id )) AS isConcern
+			FROM concern AS c INNER JOIN users AS u ON c.`concern_id`=u.`id`
+			INNER JOIN pets AS p ON p.`users_id`=c.`users_id`
+			INNER JOIN dogs_breed AS b ON p.`dogs_breed_id`=b.`id`
+			where c.concern_id=',_users_id,'
+			 GROUP BY c.id
+			 ORDER BY c.`createtime` DESC, p.createtime ASC
+			 Limit ',_start,',',_end);
+
+
+	END IF;
+	PREPARE strSQL FROM @strSQL;
+	EXECUTE strSQL;
+	DEALLOCATE PREPARE strSQL;
+    END$$
+
+DELIMITER ;

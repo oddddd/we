@@ -1,0 +1,100 @@
+<?php
+class Domain_WeMoney
+{
+    /**
+     * 获取钱包log
+     * @param $allParams
+     * @return mixed
+     * @desc wjp 2018-02-10
+     */
+    public function BackMoneyLogList($allParams){
+        $model = new Model_WeMoneyLog();
+        $sql = " where id <> null ";
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        if(isset($allParams['useType']))
+            $sql .= " && useType = {$allParams['useType']}";
+        if(isset($allParams['userId']))
+            $sql .= " && userId = {$allParams['userId']}";
+        if(isset($allParams['walletId']))
+            $sql .= " && walletId = {$allParams['walletId']}";
+        $allPage = $model -> getPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER by createTime desc 
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getList($sql);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        $res['allPage'] = $allPage;
+        return $res;
+    }
+
+    /**
+     * 获取钱包log
+     * @param $allParams
+     * @return mixed
+     * @desc wjp 2018-02-10
+     */
+    public function MoneyLogList($allParams){
+        $model = new Model_WeMoneyLog();
+        $userId = DI() -> user['id'];
+        $sql = " where userId = {$userId}";
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        if(isset($allParams['useType']))
+            $sql .= " && useType = {$allParams['useType']}";
+        if(isset($allParams['walletId']))
+            $sql .= " && walletId = {$allParams['walletId']}";
+        $sql .= " ORDER by createTime desc 
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getList($sql);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        return $res;
+    }
+
+    /**
+     * 后台操作钱包变化
+     * @param $allParams
+     * @return mixed
+     * @desc wjp 2018-02-10
+     */
+    public function MoneyChange($allParams){
+        $model = new Model_WeUserWallet();
+        $wallet = $this ->getUserWallet($allParams);
+        print_r($wallet);exit;
+        if($wallet == null)
+            return DI()->ResCode->get("WE.LoginError1");
+        $allParams['useType'] = 4;
+        $change = $model -> updateInfo($wallet,$allParams);
+        if($change == null)
+            return DI()->ResCode->get("WE.Error");
+        return DI()->ResCode->get("WE.Success");
+    }
+
+    /**
+     * 获取指定用户指定钱包
+     * @param $allParams
+     * @return mixed
+     * @desc wjp 2018-02-10
+     */
+    public function getUserWallet($allParams){
+        $model = new Model_WeUserWallet();
+        if(!isset($allParams['userId'])||!isset($allParams['walletId']))
+            return null;
+        $wallet = $model -> getByUserIdWalletId($allParams);
+        if($wallet == null){
+            $model -> insertInfo(['userId' => $allParams['userId'],'walletId' => $allParams['walletId']]);
+            $wallet = $model -> getByUserIdWalletId($allParams);
+        }
+        return $wallet;
+    }
+}

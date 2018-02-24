@@ -1,0 +1,31 @@
+DELIMITER $$
+
+USE `CM_SNS`$$
+
+DROP PROCEDURE IF EXISTS `CM_SNS_MicroblogDetail`$$
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CM_SNS_MicroblogDetail`(
+	IN _currentUserId INT, /**当前用户ID*/
+	IN _microblogId INT/*动态ID*/)
+BEGIN
+	SET @microblogUserId =( SELECT m.users_id FROM microblog AS m WHERE m.id=_microblogId );
+
+	SET @strSQL=CONCAT(
+	'SELECT m.id, m.users_id, u.nickname AS userName, u.img_url AS userImg,  u.sex AS userSex,
+		m.context, m.imgs AS microblogImgs, m.location, m.address, m.pageviews, m.createtime,
+		p.id AS petId, p.name AS petName, p.ico AS petImg, p.sex AS petSex, p.dogs_breed_id,
+		db.type_name AS breedName,
+		(SELECT COUNT(*) FROM microblog_comment AS mc WHERE mc.`microblog_id`=m.`id`) AS mc_count,
+		(SELECT COUNT(*) FROM microblog_like AS ml WHERE ml.`microblog_id`=m.`id`) AS ml_count,
+		 IF(',@microblogUserId,'=',_currentUserId,', 1, (SELECT COUNT(*) FROM concern WHERE users_id=',_currentUserId,' AND concern_id=',@microblogUserId,')) AS isConcern
+	FROM microblog AS m INNER JOIN users AS u ON m.`users_id`=u.`id`
+	INNER JOIN pets AS p ON m.`pets_id`=p.`id`
+	INNER JOIN dogs_breed AS db ON p.`dogs_breed_id`=db.`id`
+	WHERE m.id=',_microblogId);
+
+	PREPARE strSQL FROM @strSQL;
+	EXECUTE strSQL;
+	DEALLOCATE PREPARE strSQL;
+    END$$
+
+DELIMITER ;

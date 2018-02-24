@@ -1,0 +1,32 @@
+DELIMITER $$
+
+USE `CM_SNS`$$
+
+DROP PROCEDURE IF EXISTS `CM_SNS_MicroblogListForConcern`$$
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CM_SNS_MicroblogListForConcern`(
+	IN _users_id INT,/*用户ID*/
+	IN _start INT, /*起始行*/
+	IN _end INT/*结束行*/
+    )
+BEGIN
+	SET @strSQL=CONCAT('
+	SELECT m.id, m.users_id, u.nickname AS userName, u.img_url AS userImg,  u.sex AS userSex,
+		m.context, m.imgs AS microblogImgs, m.location, m.address, m.pageviews, m.createtime,
+		p.id AS petId, p.name AS petName, p.ico AS petImg, p.sex AS petSex, p.dogs_breed_id,
+		db.type_name AS breedName,
+		(SELECT COUNT(*) FROM microblog_comment AS mc WHERE mc.`microblog_id`=m.`id`) AS mc_count,
+		(SELECT COUNT(*) FROM microblog_like AS ml WHERE ml.`microblog_id`=m.`id`) AS ml_count
+
+	FROM microblog AS m INNER JOIN users AS u ON m.`users_id`=u.`id`
+	INNER JOIN pets AS p ON m.`pets_id`=p.`id`
+	INNER JOIN dogs_breed AS db ON p.`dogs_breed_id`=db.`id`
+	where m.users_id in (Select concern_id from concern where users_id=',_users_id,')
+	ORDER BY createtime DESC
+	Limit ',_start,',',_end);
+	PREPARE strSQL FROM @strSQL;
+	EXECUTE strSQL;
+	DEALLOCATE PREPARE strSQL;
+    END$$
+
+DELIMITER ;

@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * 开放接口
+ */
+class Api_WeUser extends PhalApi_Api
+{
+    public function getRules()
+    {
+        return array(
+            'MsgList' => [
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+            ],
+            'DeleteMsg' => [
+                'id' => ['name' => 'id', 'type' => 'int', 'require' => true,'desc' => '消息id'],
+            ],
+            'MakeFeedback' => [
+                'content' => ['name' => 'content', 'type' => 'string', 'require' => true,'min' => 1,'max' => 150,'desc' => '意见'],
+                'phone' => ['name' => 'phone', 'type' => 'string', 'require' => true,'min' => 1,'max' => 20,'desc' => '联系电话'],
+            ],
+            'updateUser' => [
+                'nickName' => ['name' => 'nickName', 'type' => 'string', 'require' => false,'min' => 1,'max' => 20,'desc' => '用户昵称'],
+                'photo' => ['name' => 'photo', 'type' => 'string', 'require' => false,'min' => 1,'max' => 200,'desc' => '头像'],
+                'userIntroduce' => ['name' => 'userIntroduce', 'type' => 'string', 'require' => false,'min' => 1,'max' => 100,'desc' => '用户简介'],
+                'userAddress' => ['name' => 'userAddress', 'type' => 'string', 'require' => false,'min' => 1,'max' => 100,'desc' => '用户地址'],
+                'sex' => ['name' => 'sex', 'type' => 'int', 'require' => false,'min' => 1,'max' => 3,'desc' => '1男 2女 3未知'],
+                'pushButton' => ['name' => 'pushButton', 'type' => 'int', 'require' => false,'min' => 1,'max' => 2,'desc' => '是否接受推送 1接受 2不接受'],
+//                'birthday' => ['name' => 'birthday', 'type' => 'string', 'require' => false,'min' => 1,'max' => 20,'desc' => '生日'],
+//                'phone' => ['name' => 'phone', 'type' => 'string', 'require' => false,'min' => 1,'max' => 20,'desc' => '联系电话'],
+//                'identityCard' => ['name' => 'identityCard', 'type' => 'string', 'require' => false,'min' => 1,'max' => 50,'desc' => '身份证号'],
+//                'realName' => ['name' => 'realName', 'type' => 'string', 'require' => false,'min' => 1,'max' => 20,'desc' => '真是姓名'],
+            ],
+            'bindPhone' => [
+                'phone' => ['name' => 'phone', 'type' => 'string', 'require' => true, 'regex' => '/^[1][34578][0-9]{9}$/', 'desc' => '手机号码'],
+                'code' => ['name' => 'code', 'type' => 'string', 'require' => true, 'min' => 1,'max' => 12,'desc' => '验证码'],
+                'invitationCode' => ['name' => 'invitationCode', 'type' => 'string', 'require' => false, 'min' => 1,'max' => 12,'desc' => '邀请码'],
+            ]
+        );
+    }
+
+    /**
+     * 消息列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-11
+     */
+    public function MsgList(){
+        $allParams = $this -> allParams();
+//        print_r($allParams);exit;
+        $dataDomain = new Domain_WeUser();
+        $ret = $dataDomain -> MsgList($allParams);
+        return $ret;
+    }
+
+    /**
+     * 删除消息
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-11
+     */
+    public function DeleteMsg(){
+        $allParams = $this -> allParams();
+        $dataDomain = new Domain_WeUser();
+        $ret = $dataDomain -> deleteMsg($allParams);
+        return $ret;
+    }
+
+    /**
+     * 意见反馈
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-22
+     */
+    public function MakeFeedback(){
+        $allParams = $this -> allParams();
+        $dataDomain = new Domain_WeUser();
+        $ret = $dataDomain -> MakeFeedback($allParams);
+        return $ret;
+    }
+
+    /**
+     * 修改用户
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-22
+     */
+    public function updateUser(){
+        $allParams = $this -> allParams();
+        $dataDomain = new Domain_WeUser();
+        $ret = $dataDomain -> updateUser($allParams);
+        return $ret;
+    }
+
+    /**
+     * 绑定电话号码
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-1-22
+     */
+    public function bindPhone(){
+        $allParams = $this -> allParams();
+        $dataDomain = new Domain_WeData();
+        $code = $dataDomain -> confirmMsg($allParams);
+        if($code != 1)
+            return DI() -> ResCode -> get("WE.codeError");
+        $dataDomain = new Domain_WeUser();
+        $ret = $dataDomain -> bindPhone($allParams);
+        return $ret;
+    }
+}

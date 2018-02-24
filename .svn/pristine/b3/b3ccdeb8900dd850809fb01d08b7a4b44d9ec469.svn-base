@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * WeUser.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_WeBanner extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'banner';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+    /**
+     * 获取轮换板列表
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getBannerList()
+    {
+        try {
+            $sql = "select * from we_banner where status = 1 ORDER by top desc";
+            $bannerList = $this->getORM()->queryAll($sql);
+            return isset($bannerList) ? $bannerList : null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取轮换板
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getBanner($id)
+    {
+        try {
+            $sql = "select * from we_banner where status = 1 && id = {$id} ORDER by top desc";
+            $bannerList = $this->getORM()->queryAll($sql);
+            return isset($bannerList[0]) ? $bannerList[0] : null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 修改轮换板
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateBanner($data)
+    {
+        try {
+            $ret = $this->getORM()->where('id', $data['id'])->update($data);
+            $this -> addLog($data['id']);
+            return isset($ret) ? $ret : null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入轮换板
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertBanner($data)
+    {
+        try {
+            $ret = $this->getORM()->insert($data);
+            $this -> addLog($this->getORM()->insert_id());
+            return isset($ret) ? $ret : null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

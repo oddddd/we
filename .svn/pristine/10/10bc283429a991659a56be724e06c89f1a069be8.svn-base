@@ -1,0 +1,16 @@
+<?php
+$host = "http://120.79.80.141/";
+
+$matchUrl = $host."?service=BackData.getList";
+$newsUrl = $host."?service=BackData.getMatchNews";
+$nbaHistoryUrl = $host."?service=BackData.getMatchData";
+$nbaPlayerUrl = $host."?service=BackData.getMatchTeamData";
+$log1 = file_get_contents($matchUrl);
+sleep(1);
+$log2 = file_get_contents($newsUrl);
+sleep(1);
+$log3 = file_get_contents($nbaHistoryUrl);
+sleep(1);
+$log4 = file_get_contents($nbaPlayerUrl);
+sleep(1);
+echo $log1. "       ".$log2."       ".$log3;

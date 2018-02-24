@@ -1,0 +1,137 @@
+<?php
+
+/**
+ * 开放接口
+ */
+class Api_WeConsult extends PhalApi_Api
+{
+    public function getRules()
+    {
+        return array(
+            'insertComment' => [
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true,'desc' => '帖子或视频或快讯id'],
+                'type' => ['name' => 'type', 'type' => 'int', 'require' => true,'desc' => '咨询类型 1咨询 2视频 3快讯'],
+                'comment' => ['name' => 'comment', 'type' => 'string', 'require' => true, 'min' => 1,'max' => 200, 'desc' => '评论内容'],
+            ],
+            'deleteComment' => [
+                'id' => ['name' => 'id', 'type' => 'int', 'require' => true,'desc' => '评论id'],
+            ],
+            'insertCommentLike' => [
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true, 'desc' => '评论id'],
+            ],
+            'deleteCommentLike' => [
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true, 'desc' => '评论id'],
+            ],
+            'bindClassPage' =>[
+            ],
+            'bindClass' =>[
+                'consultClassId' => ['name' => 'consultClassId', 'type' => 'string', 'require' => true,'desc' => '格式 id,id,id,id'],
+            ],
+        );
+    }
+
+    /**
+     * 发送评论
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function insertComment(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $rolerCode = DI()->Ruler->Roler($data['comment']);
+
+        if($rolerCode == -100)
+            return DI()->ResCode->get("WE.rulerError");
+        $data['userId'] = DI()->user['id'];
+        $data['pid'] = 0;
+        $code = $domain -> insertComment($data);
+        return $code;
+    }
+
+    /**
+     * 删除评论
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function deleteComment(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $code = $domain -> deleteComment($data);
+        if($code != null)
+            return DI()->ResCode->get("WE.Success");
+        return DI()->ResCode->get("WE.Error");
+    }
+
+    /**
+     * 评论点赞
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function insertCommentLike(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $data['userId'] = DI()->user['id'];
+        $data['pid'] = 0;
+        $data['type'] = 1;
+        $code = $domain -> insertCommentLike($data);
+        if($code != null)
+            return DI()->ResCode->get("WE.Success");
+        if($code == null)
+            return DI()->ResCode->get("WE.lostError");
+        return DI()->ResCode->get("WE.Error");
+    }
+
+    /**
+     * 删除评论点赞
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function deleteCommentLike(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $code = $domain -> deleteCommentLike($data);
+        if($code != null)
+            return DI()->ResCode->get("WE.Success");
+        return DI()->ResCode->get("WE.Error");
+    }
+
+    /**
+     * 分类选择页面
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function bindClassPage(){
+        $domain = new Domain_WeConsult();
+        $list = $domain -> userConsultClassList();
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 添加用户分类
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function bindClass(){
+        $domain = new Domain_WeConsult();
+        $data = $this -> allParams();
+        $list = $domain -> updateBindClass($data);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+}

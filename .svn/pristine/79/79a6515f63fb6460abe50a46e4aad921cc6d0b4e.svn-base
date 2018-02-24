@@ -1,0 +1,205 @@
+<?php
+/**
+ * UUserRole.php
+ */
+class Domain_UUserRole
+{
+    /**
+     * 登录后台用户
+     * @param $data
+     * @return array
+     */
+    public function login($data){
+        $model = new Model_UUser();
+        $tokenModel = new Model_UserToken();
+        $hasUser = $model ->getPhonePwd($data['phone'],$data['pswd']);
+        if($hasUser == null)
+            return DI()->ResCode->get("WE.LoginError1");
+
+        $token = md5($hasUser['phone'].time().$hasUser['id'].'2');
+        $token = 'bt_'.$token;
+        $tokenModel->deleteToken($hasUser['id'],2);
+        DI() -> redis -> set_time($token,$hasUser['id'],3600);
+        $tokenModel->insertToken($hasUser['id'],2,$token);
+        $hasUser['backToken'] = $token;
+
+        $role = $this -> getRole($hasUser['id']);
+        $hasUser['max'] = isset($role['max'])?$role['max']:false;
+        $hasUser['permission'] = isset($role['permission'])?$role['permission']:[];
+        $hasUser['role'] = isset($role['role'])?$role['role']:[];
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $hasUser;
+        return $res;
+    }
+
+
+    /**
+     * 添加后台用户
+     * @param $data
+     * @return array
+     */
+    public function makeUser($data){
+        $model = new Model_UUser();
+        $ret = $model ->insertUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 修改后台用户
+     * @param $data
+     * @return array
+     */
+    public function updateUser($data){
+        $model = new Model_UUser();
+        $ret = $model ->updateUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 添加用户角色绑定
+     * @param $data
+     * @return array
+     */
+    public function makeRolePerMission($data){
+        $model = new Model_URolePermission();
+        $modelRole = new Model_URole();
+
+        $has = $model -> getRoleHas($data);
+
+        if($has != null)
+            return null;
+
+        $hasRole = $modelRole -> getRole(['id'=>$data['pid']]);
+        if($hasRole == null)
+            return null;
+
+        $ret = $model ->insertUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 删除角色绑定
+     * @param $data
+     * @return array
+     */
+    public function deleteRolePerMission($data){
+        $model = new Model_URolePermission();
+        $ret = $model ->deleteUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 添加角色
+     * @param $data
+     * @return array
+     */
+    public function makeRole($data){
+        $modelRole = new Model_URole();
+        $ret = $modelRole ->insertUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 修改角色
+     * @param $data
+     * @return array
+     */
+    public function UpdateRole($data){
+        $modelRole = new Model_URole();
+        $has = $modelRole -> getRole($data);
+        if($has == null)
+            return null;
+        $ret = $modelRole ->updateUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 删除角色
+     * @param $data
+     * @return array
+     */
+    public function deleteRole($data){
+
+        $model = new Model_URolePermission();
+        $has = $model ->getRoleByPid(['pid'=>$data['id']]);
+        if(count($has)>0){
+            return null;
+        }
+        $modelRole = new Model_URole();
+        $ret = $modelRole ->deleteUserInfo($data);
+        return $ret;
+    }
+
+    /**
+     * 获取角色列表
+     * @return array
+     */
+    public function RoleList(){
+        $model = new Model_URole();
+        $ret = $model ->getRoleList();
+        return $ret;
+    }
+
+    /**
+     * 获取权限列表
+     * @return array
+     */
+    public function PerMissionList(){
+        $model = new Model_UPermission();
+        $ret = $model ->getAllRoleList();
+        return $ret;
+    }
+
+    /**
+     * 获取用户权限
+     * @param $userId
+     * @return array
+     */
+    public function getRole($userId){
+        $model = new Model_URolePermission();
+        $modelRole = new Model_URole();
+        $modelPermission = new Model_UPermission();
+        $backUser = $model ->getRole(['rid' => $userId]);
+        $role = [];
+        $permission = [];
+        foreach ($backUser as $value){
+            if(isset($value['pid'])){
+                $roleInfo = $modelRole -> getRole(['id' => $value['pid']]);
+                if($roleInfo != null)
+                    $role[] = $roleInfo;
+            }
+        }
+        foreach ($role as $v){
+            if($v['id'] == 1)
+                return ['max'=>true];
+            if(isset($v['type'])){
+                $permissionsInfo = $modelPermission->getRoleList(['id' => $v['type']]);
+                foreach ($permissionsInfo as $value){
+                    if(isset($value['url']) && !in_array($value['url'],$permission)){
+                        $permission [] = $value['url'];
+                    }
+                }
+            }
+        }
+        return ['permission' => $permission,'role' => $role];
+    }
+    /**
+     * token 获取用户id
+     * @param $token
+     * @param $category
+     * @return mixed
+     * @throws PhalApi_Exception_BadRequest
+     */
+    public function getUserId($token,$category){
+        $tokenModel = new Model_UserToken();
+        $userId = DI() -> redis -> getInfo($token);
+        if(empty($userId)){
+            $userToken = $tokenModel -> seletcUserId($token,$category);
+//            print_r($userToken);exit;
+            if($userToken == null || $userToken['userId'] == null)
+                throw new PhalApi_Exception_BadRequest(T('用户未登录'), 6);
+            $userId = $userToken['userId'];
+        }
+        return $userId;
+    }
+}

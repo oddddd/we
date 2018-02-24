@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * WeUser.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_WeCommentLike extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'commentLike';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+    }
+
+    /**
+     * 获取评论点赞
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getCommentLike($id,$userId)
+    {
+        try {
+            $sql = "select * from we_commentLike where fid = {$id} && userId = {$userId}";
+            $comment = $this->getORM()->queryAll($sql);
+            return isset($comment[0])?$comment[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入评论点赞
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertCommentLike($data)
+    {
+        try {
+
+            $ret = $this->getORM()->insert($data);
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 删除评论点赞
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteCommentLike($id)
+    {
+        try {
+            $userId = DI()->user['id'];
+            $sql = "delete from we_commentLike where fid = {$id} && userId = {$userId}";
+            $comment = $this->getORM()->queryAll($sql);
+            $comment['ret'] = true;
+            return $comment;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

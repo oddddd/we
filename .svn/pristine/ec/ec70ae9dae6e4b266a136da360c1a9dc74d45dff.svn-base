@@ -1,0 +1,259 @@
+<?php
+
+/**
+ * WeUser.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_WeUser extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'user';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+    public function __construct()
+    {
+    }
+
+    /**
+     * 获取用户信息
+     * @param string $sql
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getUserList($sql)
+    {
+        try {
+            $sql = "select * from we_user {$sql}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取总页数
+     * @param string $sql
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getUserPage($sql)
+    {
+        try {
+            $sql = "select COUNT(*) as page from we_user {$sql}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return isset($user_info[0])?$user_info[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取用户信息
+     * @param string $phone
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function get_logUserinfo($phone)
+    {
+        try {
+            $sql = "select * from we_user where phone = {$phone} && status = 1";
+            $user_info = $this->getORM()->queryAll($sql);
+            return isset($user_info[0])?$user_info[0]:-1;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取用户信息
+     * @param int $id
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getUserId($id)
+    {
+        try {
+            $sql = "select * from we_user where id = {$id}";
+            $user_info = $this->getORM()->queryAll($sql);
+            return isset($user_info[0])?$user_info[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取用户信息
+     * @param int $phone
+     * @param string $pwd
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getPhonePwd($phone,$pwd)
+    {
+        try {
+            $sql = "select * from we_user where phone = {$phone} && pwd1 = '{$pwd}'";
+            $user_info = $this->getORM()->queryAll($sql);
+            if (isset($user_info[0])) {
+                return $user_info[0];
+            } else {
+                return -1;
+            }
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取是否有相同验证码
+     * @param string $code
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getCodeList($code)
+    {
+        try {
+            $sql = "select * from we_user where invitationCode = '{$code}'";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取验证码用户
+     * @param string $code
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getUserByCode($code)
+    {
+        try {
+            $sql = "select * from we_user where invitationCode = '{$code}'";
+            $user_info = $this->getORM()->queryAll($sql);
+            return isset($user_info[0])?$user_info[0]:null;
+
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取用户信息
+     * @param array $allParams
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getUserOther($allParams)
+    {
+        try {
+            $sql = "select * from we_user where status = 1 ";
+            switch ($allParams['type']){
+                case 1:
+                    if(isset($allParams['wxOpenid']))
+                        $sql .= "&& wxOpenid = '{$allParams['wxOpenid']}'";
+                    else
+                        return null;
+                    break;
+                case 2:
+                    if(isset($allParams['qqOpenid']))
+                        $sql .= "&& qqOpenid = '{$allParams['qqOpenid']}'";
+                    else
+                        return null;
+                    break;
+                case 3:
+                    if(isset($allParams['sinaOpenid']))
+                        $sql .= "&& sinaOpenid = '{$allParams['sinaOpenid']}'";
+                    else
+                        return null;
+                    break;
+                default:
+                    return null;
+            }
+
+            $user_info = $this->getORM()->queryAll($sql);
+            return isset($user_info[0])?$user_info[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入用户
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertUser($data)
+    {
+        try {
+            do{
+                $data['invitationCode'] = rand(100000000,999999999);
+                $has = $this -> getCodeList($data['invitationCode']);
+            } while(count($has) > 0);
+            $data['rIp'] = DI() -> bzy -> getClientIp();
+            $ret = $this->getORM()->insert($data);
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 修改用户数据
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateUser($data)
+    {
+        try {
+            $hasUser = $this -> getUserId($data['id']);
+            if( !isset($hasUser['invitationCode']) || $hasUser['invitationCode'] == null || $hasUser['invitationCode'] == '' ){
+                do{
+                    $data['invitationCode'] = rand(100000000,999999999);
+                    $has = $this -> getCodeList($data['invitationCode']);
+                } while(count($has) > 0);
+            }
+
+            $ret = $this->getORM()->where('id', $data['id'])->update($data);
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

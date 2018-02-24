@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * WeUser.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_WeConsultClass extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'consultClass';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+//        self::$mtoken = DI()->config->get('app.Pay.token');
+    }
+
+
+    /**
+     * 获取帖子分类列表
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getConsultClassList()
+    {
+        try {
+            $sql = "select * from we_consultClass where status = 1 ORDER by top desc";
+            $classList = $this->getORM()->queryAll($sql);
+            return $classList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取帖子分类列表有id
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getConsultClassListById($id)
+    {
+        try {
+            $sql = "select * from we_consultClass where status = 1 && id in({$id})";
+            echo $sql;exit;
+            $classList = $this->getORM()->queryAll($sql);
+            return $classList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取帖子分类列表有没有
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getConsultClassListByNotId($id)
+    {
+        try {
+//            print_r($id);exit;
+//            if($id = null || $id ='')
+//                $sql = "select * from we_consultClass where status = 1 ORDER by top desc";
+//            else
+                $sql = "select * from we_consultClass where status = 1 && id NOT in({$id})";
+            $classList = $this->getORM()->queryAll($sql);
+            return $classList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 修改帖子分类
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateConsultClass($data)
+    {
+        try {
+            $ret = $this->getORM()->where('id', $data['id'])->update($data);
+            $this -> addLog($data['id']);
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入帖子分类
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertConsultClass($data)
+    {
+        try {
+            $ret = $this->getORM()->insert($data);
+            $this -> addLog($this->getORM()->insert_id());
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

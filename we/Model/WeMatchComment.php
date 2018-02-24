@@ -1,0 +1,216 @@
+<?php
+
+/**
+ * WeMatchComment.php
+ *
+ * @author: wjp 2017-01-10
+ */
+class Model_WeMatchComment extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'matchComment';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+    }
+
+
+    /**
+     * 获取列表
+     * @desc wjp 2017-12-29
+     * @param $allParams
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getList($allParams)
+    {
+        try {
+            $sql = "select a.*,b.nickName,b.photo
+from we_matchComment as a 
+left join we_user as b on a.userId = b.id
+where a.fid = {$allParams['fid']} ";
+
+            if(isset($allParams['type']) && ($allParams['type'] == 1 || $allParams['type'] ==2))
+                $sql .= " && a.type = {$allParams['type']} ";
+
+
+            if(isset($allParams['page'])&&$allParams['page']>0){
+                $page = $allParams['page'];
+                $page = $page - 1;
+                if($page < 0)
+                    return null;
+                $limitEnd = DI()->config->get("app.page.def");
+                $limitStart = $limitEnd*$page;
+
+                $sql .= " ORDER by a.createTime desc 
+Limit {$limitStart},{$limitEnd}";
+            }else{
+                $limit = DI()->config->get("app.page.commentMatch");
+                if(isset($allParams['beforeTime']) && $allParams['beforeTime'] != ''){
+                    $sql .= " && a.createTime < '{$allParams['beforeTime']}' ";
+
+                }
+                if(isset($allParams['afterTime']) && $allParams['afterTime'] != ''){
+                    $sql .= " && a.createTime > '{$allParams['afterTime']}' ";
+
+                }
+                $sql .= " ORDER by a.createTime desc 
+Limit {$limit}";
+            }
+            $classList = $this->getORM()->queryAll($sql);
+            return $classList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取列表
+     * @desc wjp 2017-12-29
+     * @param $find
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getBackList($find)
+    {
+        try {
+            $sql = "select a.*,b.nickName,b.photo
+from we_matchComment as a 
+left join we_user as b on a.userId = b.id {$find}";
+            $list = $this->getORM()->queryAll($sql);
+            return $list;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取列表
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getBackPage($find)
+    {
+        try {
+            $sql = "select count(*) as page from we_matchComment as a left join we_user as b on a.userId = b.id {$find}";
+            $list = $this->getORM()->queryAll($sql);
+            return isset($list[0])?$list[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取推送列表
+     * @desc wjp 2017-01-17
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getPushList()
+    {
+        try {
+            $date = date("Y-m-d H:i:s");
+            $sql = "select *,unix_timestamp(kickoffTime) as pushTime
+from we_matchBespeak where kickoffTime > '{$date}' && isPush2 = 0  ORDER by a.updateTime desc ";
+            $list = $this->getORM()->queryAll($sql);
+            return $list;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取某个用户的评论
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getByFid($data)
+    {
+        try {
+            $userId = DI()->user['id'];
+            $sql = "select * from we_matchComment where fid = {$data['fid']} && userId = {$userId}";
+            $list = $this->getORM()->queryAll($sql);
+            return isset($list[0])?$list[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 修改评论
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateMatchComment($data)
+    {
+        try {
+            $ret = $this->getORM()->where('id', $data['id'])->update($data);
+            $this -> addLog($data['id']);
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入评论
+     * @desc wjp 2017-01-18
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertMatchComment($data)
+    {
+        try {
+            $userId = DI()->user['id'];
+            $data['userId'] = $userId;
+            $ret = $this->getORM()->insert($data);
+            $this -> addLog($this->getORM()->insert_id());
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 删除评论
+     * @desc wjp 2018-01-18
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteMatchComment($data)
+    {
+        try {
+            $sql = "delete from we_matchComment where id = {$data['id']}";
+            $msg = $this->getORM()->queryAll($sql);
+            $this -> addLog($data['id']);
+            return $msg;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}
