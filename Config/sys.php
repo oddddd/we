@@ -26,22 +26,30 @@ return array(
      */
 
     'redis' => array(
-    //Redis缓存配置项
-    'servers'  => array(
-        'host'   => '172.18.32.106',        //Redis服务器地址
-        'port'   => '6379',             //Redis端口号
-        'prefix' => 'wev-',      //Redis-key前缀
-        'auth'   => '123456',    //Redis链接密码
+        //Redis缓存配置项
+        'servers'  => array(
+            //测试环境2
+            'host'   => '127.0.0.1',        //Redis服务器地址
+            'auth'   => 'alidadiao',    //Redis链接密码
+            //测试环境
+//            'host'   => '172.18.32.106',        //Redis服务器地址
+//            'auth'   => '123456',    //Redis链接密码
+            //正式环境
+//            'host'   => '172.18.32.110',        //Redis服务器地址
+//            'auth'   =>  '!Kuaiyou0408@#',
+            'port'   => '6379',             //Redis端口号
+            'prefix' => 'wev-',      //Redis-key前缀
+        ),
+        //正式环境
+        // Redis分库对应关系
+        'DB'       => array(
+            'developers' => 1,
+            'user'       => 2,
+            'code'       => 3,
+        ),
+        //使用阻塞式读取队列时的等待时间单位/秒
+        'blocking' => 5,
     ),
-    // Redis分库对应关系
-    'DB'       => array(
-        'developers' => 1,
-        'user'       => 2,
-        'code'       => 3,
-    ),
-    //使用阻塞式读取队列时的等待时间单位/秒
-    'blocking' => 5,
-),
 //    'mongo'=>array(
 //        '192.168.200.10:27017',
 //    ),

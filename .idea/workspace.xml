@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="976c5770-b628-4b06-8adf-8acd7f9ac6eb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PhalApi/PhalApi/Filter/SessionSign.php" afterPath="$PROJECT_DIR$/PhalApi/PhalApi/Filter/SessionSign.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Public/we/loop.php" afterPath="$PROJECT_DIR$/Public/we/loop.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Config/sys.php" afterPath="$PROJECT_DIR$/Config/sys.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,61 +16,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="init.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Config/init.sql">
+      <file leaf-file-name="BackConsult.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/we/Api/BackConsult.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1006">
-              <caret line="688" column="59" lean-forward="false" selection-start-line="688" selection-start-column="59" selection-end-line="688" selection-end-column="59" />
+            <state relative-caret-position="341">
+              <caret line="239" column="33" lean-forward="true" selection-start-line="239" selection-start-column="33" selection-end-line="239" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionSign.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Filter/SessionSign.php">
+      <file leaf-file-name="BackData.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/we/Api/BackData.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="24" column="75" lean-forward="false" selection-start-line="24" selection-start-column="75" selection-end-line="24" selection-end-column="75" />
+            <state relative-caret-position="345">
+              <caret line="124" column="5" lean-forward="false" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WeUser.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Api/WeUser.php">
+      <file leaf-file-name="WeConsult.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/we/Domain/WeConsult.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1734">
-              <caret line="124" column="35" lean-forward="false" selection-start-line="124" selection-start-column="35" selection-end-line="124" selection-end-column="35" />
+            <state relative-caret-position="259">
+              <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WeOpen.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Api/WeOpen.php">
+      <file leaf-file-name="Lite.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Library/PhpSimple/Lite.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="216" column="30" lean-forward="false" selection-start-line="216" selection-start-column="30" selection-end-line="216" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WeUser.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Domain/WeUser.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2751">
-              <caret line="126" column="26" lean-forward="false" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="loop.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Public/we/loop.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="58" lean-forward="false" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="58" />
+            <state relative-caret-position="130">
+              <caret line="216" column="40" lean-forward="false" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -80,39 +59,67 @@
       <file leaf-file-name="endMatch.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Public/we/endMatch.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="32" />
+            <state relative-caret-position="165">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="init.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Config/init.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="1238" column="56" lean-forward="false" selection-start-line="1238" selection-start-column="56" selection-end-line="1238" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dbs.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Config/dbs.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="32" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Lite.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Library/Redis/Lite.php">
+        <entry file="file://$PROJECT_DIR$/Library/Bzy/Lite.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="401" column="27" lean-forward="false" selection-start-line="401" selection-start-column="20" selection-end-line="401" selection-end-column="27" />
+            <state relative-caret-position="833">
+              <caret line="74" column="24" lean-forward="false" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UUserRole.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Domain/UUserRole.php">
+      <file leaf-file-name="sys.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Config/sys.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="225" column="9" lean-forward="false" selection-start-line="218" selection-start-column="8" selection-end-line="225" selection-end-column="9" />
+            <state relative-caret-position="154">
+              <caret line="32" column="34" lean-forward="false" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WeData.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Domain/WeData.php">
+      <file leaf-file-name="WeConsultAuthor.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/we/Model/WeConsultAuthor.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5">
-              <caret line="700" column="13" lean-forward="false" selection-start-line="700" selection-start-column="9" selection-end-line="700" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="178">
+              <caret line="94" column="29" lean-forward="true" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
+              <folding>
+                <marker date="1520590199000" expanded="true" signature="751:799" ph="select * fro... we_consultAuthor" />
+                <marker date="1520590199000" expanded="true" signature="1355:1410" ph="select count... we_consultAuthor" />
+                <marker date="1520590199000" expanded="true" signature="1965:2007" ph="select * fro... we_consultAuthor" />
+                <marker date="1520590199000" expanded="true" signature="2564:2621" ph="select * fro... we_consultAuthor" />
+                <marker date="1520590199000" expanded="true" signature="2564:2622" ph="select * fro... we_consultAuthor" />
+                <marker date="1520590199000" expanded="true" signature="2564:2630" ph="select * fro... we_consultAuthor" />
+                <marker date="1520590199000" expanded="true" signature="4382:4430" ph="update we_co... " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -121,97 +128,98 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ConsultList</find>
-      <find>AdvertisingLogList</find>
-      <find>PerMissionList</find>
-      <find>AdvertisingLog</find>
-      <find>insert</find>
-      <find>MoneyChange</find>
-      <find>'BEGIN'</find>
-      <find>servers</find>
-      <find>_pdos</find>
-      <find>beginTransaction</find>
-      <find>moneyl</find>
-      <find>BindClassPage</find>
-      <find>consultClassList</find>
-      <find>config</find>
-      <find>getList</find>
-      <find>getMatchData</find>
-      <find>getMatchTeamData</find>
-      <find>getMatchNews</find>
-      <find>LoginError1</find>
+      <find>insertVideoConsult</find>
+      <find>LiveStreamBindList</find>
+      <find>makeLiveStreamBind</find>
+      <find>comment</find>
+      <find>getLiveStreamList</find>
       <find>MatchZqHistory</find>
-      <find>ExchangeMoney</find>
-      <find>MatchNqPlayer</find>
-      <find>NewConsultList</find>
-      <find>getZqPlayerList</find>
-      <find>DI</find>
-      <find>MatchZqPlayer</find>
-      <find>getUserId</find>
-      <find>del</find>
-      <find>LoginOther</find>
-      <find>咨询</find>
+      <find>newC</find>
+      <find>first</find>
+      <find>hot</find>
+      <find>$time</find>
+      <find>InsertVideoConsult</find>
+      <find>insertComment</find>
+      <find>热门</find>
+      <find>public</find>
+      <find>set_time</find>
+      <find>userId</find>
+      <find>bannerList</find>
+      <find>MatchListAfter</find>
+      <find>getList</find>
+      <find>array_reverse</find>
+      <find>MatchListBefore</find>
+      <find>快讯</find>
+      <find>LogList</find>
+      <find>herf</find>
+      <find>GainNewConsultDetail</find>
+      <find>GainNewConsultDetail</find>
+      <find>GainNewConsultList</find>
+      <find>list</find>
+      <find>&amp;ldquo;</find>
+      <find>GainNewZqConsultList</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/we/Model</dir>
-      <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/Library</dir>
+      <dir>$PROJECT_DIR$/we</dir>
+      <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/we/Model/WeConsultAuthor.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeFeedback.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeLeague.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeLiveStream.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeLiveStreamBind.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeMatchComment.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeMatchNews.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeNewConsultClass.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeRecommend.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeTeam.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeVideoConsultClass.php" />
-        <option value="$PROJECT_DIR$/we/Model/UUser.php" />
-        <option value="$PROJECT_DIR$/Config/app.php" />
-        <option value="$PROJECT_DIR$/Library/Qiniu2/upToken.php" />
-        <option value="$PROJECT_DIR$/we/Api/BackUpload.php" />
-        <option value="$PROJECT_DIR$/Library/Qiniu2/Lite.php" />
-        <option value="$PROJECT_DIR$/we/Model/ULog.php" />
-        <option value="$PROJECT_DIR$/we/Model/UIp.php" />
-        <option value="$PROJECT_DIR$/we/Domain/UUserRole.php" />
+        <option value="$PROJECT_DIR$/we/Model/URole.php" />
         <option value="$PROJECT_DIR$/we/Api/BackRole.php" />
-        <option value="$PROJECT_DIR$/Library/Bzy/Lite.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeUser.php" />
-        <option value="$PROJECT_DIR$/Public/we/endMatch.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeMoneyLog.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeBzy.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeAdvertising.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeAdvertisingLog.php" />
-        <option value="$PROJECT_DIR$/we/Api/BackData.php" />
-        <option value="$PROJECT_DIR$/we/Api/WeMoney.php" />
-        <option value="$PROJECT_DIR$/PhalApi/Tests/DB/PhalApi_DB_NotORM_Test.php" />
-        <option value="$PROJECT_DIR$/PhalApi/PhalApi/DB/NotORM.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeConsultClass.php" />
-        <option value="$PROJECT_DIR$/we/Domain/WeConsult.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeExchangeLog.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeUserWallet.php" />
-        <option value="$PROJECT_DIR$/PhalApi/PhalApi/Model/NotORM.php" />
-        <option value="$PROJECT_DIR$/Config/admin.php" />
-        <option value="$PROJECT_DIR$/we/Api/BackMoney.php" />
-        <option value="$PROJECT_DIR$/we/Domain/WeMoney.php" />
-        <option value="$PROJECT_DIR$/we/Api/WeOpen.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeNewConsult.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeBanner.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeBanner.php" />
+        <option value="$PROJECT_DIR$/we/Api/BackBanner.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeRecommend.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeVideoConsultClass.php" />
         <option value="$PROJECT_DIR$/we/Model/WeConsult.php" />
-        <option value="$PROJECT_DIR$/we/Model/WeVideoConsult.php" />
-        <option value="$PROJECT_DIR$/Library/PhpSimple/Lite.php" />
-        <option value="$PROJECT_DIR$/we/Domain/WeData.php" />
-        <option value="$PROJECT_DIR$/Config/init.sql" />
-        <option value="$PROJECT_DIR$/we/Api/WeUser.php" />
+        <option value="$PROJECT_DIR$/we/Model/UUser.php" />
+        <option value="$PROJECT_DIR$/PhalApi/PhalApi/DB/NotORM.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeCommentTask.php" />
+        <option value="$PROJECT_DIR$/we/Api/BackTask.php" />
+        <option value="$PROJECT_DIR$/we/Api/WeTask.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeTask.php" />
+        <option value="$PROJECT_DIR$/we/Api/WeConsult.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeRebate.php" />
+        <option value="$PROJECT_DIR$/Config/admin.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeComment.php" />
+        <option value="$PROJECT_DIR$/ResCode/WE.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeTask.php" />
+        <option value="$PROJECT_DIR$/PhalApi/PhalApi.php" />
+        <option value="$PROJECT_DIR$/PhalApi/PhalApi/ApiFactory.php" />
+        <option value="$PROJECT_DIR$/PhalApi/PhalApi/Request.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeLiveStream.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeMatchComment.php" />
         <option value="$PROJECT_DIR$/Library/Redis/Lite.php" />
-        <option value="$PROJECT_DIR$/we/Domain/WeUser.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeNewConsult.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeVideoConsult.php" />
+        <option value="$PROJECT_DIR$/we/Api/WeOpen.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeBzy.php" />
+        <option value="$PROJECT_DIR$/Public/we/index.php" />
+        <option value="$PROJECT_DIR$/PhalApi/PhalApi/Cache/Redis.php" />
         <option value="$PROJECT_DIR$/Public/we/loop.php" />
+        <option value="$PROJECT_DIR$/Library/Bzy/Lite.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeData.php" />
+        <option value="$PROJECT_DIR$/Public/init.php" />
+        <option value="$PROJECT_DIR$/Config/init.sql" />
+        <option value="$PROJECT_DIR$/Config/init2.0.sql" />
+        <option value="$PROJECT_DIR$/we/Model/ULog.php" />
+        <option value="$PROJECT_DIR$/we/Domain/UUserRole.php" />
         <option value="$PROJECT_DIR$/PhalApi/PhalApi/Filter/SessionSign.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeConsultAuthor.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeNewConsultClass.php" />
+        <option value="$PROJECT_DIR$/we/Model/WeNewConsult.php" />
+        <option value="$PROJECT_DIR$/we/Api/BackConsult.php" />
+        <option value="$PROJECT_DIR$/Library/PhpSimple/Lite.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeConsult.php" />
+        <option value="$PROJECT_DIR$/Public/we/endMatch.php" />
+        <option value="$PROJECT_DIR$/Config/dbs.php" />
+        <option value="$PROJECT_DIR$/Config/sys.php" />
+        <option value="$PROJECT_DIR$/we/Api/BackData.php" />
       </list>
     </option>
   </component>
@@ -255,6 +263,28 @@
             <path>
               <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
               <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Config" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Library" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Library" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Bzy" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Library" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PhpSimple" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -262,6 +292,13 @@
               <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Cache" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
@@ -269,6 +306,13 @@
               <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Filter" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Helper" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
@@ -297,18 +341,6 @@
               <item name="we" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Api" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="we" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Domain" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="we" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Model" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -319,6 +351,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="configurable.group.language" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/dddd/项目/wevsport/we/Model/URolePermission.php" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -367,7 +400,10 @@
       <workItem from="1517557273220" duration="292000" />
       <workItem from="1517557591064" duration="172000" />
       <workItem from="1517558231825" duration="7000" />
-      <workItem from="1517558262676" duration="111306000" />
+      <workItem from="1517558262676" duration="135375000" />
+      <workItem from="1519718811027" duration="16798000" />
+      <workItem from="1519826288152" duration="603000" />
+      <workItem from="1519827144162" duration="80864000" />
     </task>
     <task id="LOCAL-00001">
       <created>1517558458038</created>
@@ -380,7 +416,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111777000" />
+    <option name="totallyTimeSpent" value="234111000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -393,18 +429,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21816881" sideWeight="0.49369368" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22532189" sideWeight="0.49369368" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.49427754" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2261185" sideWeight="0.5143061" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29504234" sideWeight="0.51287556" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2261185" sideWeight="0.48569384" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3337364" sideWeight="0.49427754" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29504234" sideWeight="0.48712447" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24964234" sideWeight="0.5063063" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -412,6 +449,25 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.49427754" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29504234" sideWeight="0.51287556" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2261185" sideWeight="0.48569384" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29504234" sideWeight="0.48712447" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22532189" sideWeight="0.49369368" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24964234" sideWeight="0.5063063" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -429,464 +485,18 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Public/init.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Translator.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="51" column="26" lean-forward="false" selection-start-line="51" selection-start-column="15" selection-end-line="51" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/URolePermission.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="98" column="102" lean-forward="true" selection-start-line="98" selection-start-column="12" selection-end-line="98" selection-end-column="102" />
-          <folding>
-            <marker date="1517902159000" expanded="true" signature="700:744" ph="select * fro... u_role_permission" />
-            <marker date="1517902159000" expanded="true" signature="1320:1364" ph="select * fro... u_role_permission" />
-            <marker date="1517902159000" expanded="true" signature="1939:2007" ph="select * fro... u_role_permission" />
-            <marker date="1517902159000" expanded="true" signature="2583:2663" ph="insert into u_role_permission... " />
-            <marker date="1517902159000" expanded="true" signature="3268:3334" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Api/WeMoney.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="12" column="129" lean-forward="false" selection-start-line="12" selection-start-column="129" selection-end-line="12" selection-end-column="129" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Api/WeMatch.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="114" lean-forward="false" selection-start-line="21" selection-start-column="90" selection-end-line="21" selection-end-column="114" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/DI.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/PDO/PDO.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="777" column="20" lean-forward="false" selection-start-line="777" selection-start-column="20" selection-end-line="777" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Public/we/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15750">
-          <caret line="1054" column="24" lean-forward="false" selection-start-line="1054" selection-start-column="24" selection-end-line="1054" selection-end-column="24" />
-          <folding>
-            <marker date="1517557232000" expanded="true" signature="26195:26313" ph="INSERT INTO &quot;${$this-&gt;prefix}&quot;... " />
-            <marker date="1517557232000" expanded="true" signature="28186:28230" ph="DELETE FROM " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/NotORM/NotORM.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="84" column="72" lean-forward="false" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/Tests/DB/PhalApi_DB_NotORM_Test.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="94" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/DB/NotORM.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="298" column="32" lean-forward="true" selection-start-line="298" selection-start-column="32" selection-end-line="298" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Config/dbs.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="12" column="16" lean-forward="false" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Public/we/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeConsultClassBind.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
-          <folding>
-            <marker date="1517557258000" expanded="true" signature="744:807" ph="select * fro... we_consultClassBind" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeConsultClass.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="59" column="84" lean-forward="false" selection-start-line="59" selection-start-column="84" selection-end-line="59" selection-end-column="84" />
-          <folding>
-            <marker date="1519268128000" expanded="true" signature="731:795" ph="select * fro... we_consultClass" />
-            <marker date="1519268128000" expanded="true" signature="1345:1407" ph="select * fro... we_consultClass" />
-            <marker date="1519268128000" expanded="true" signature="2149:2215" ph="select * fro... we_consultClass" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeConsult.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="165" column="41" lean-forward="false" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/we/Api/WeConsult.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="114" column="33" lean-forward="false" selection-start-line="114" selection-start-column="33" selection-end-line="114" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Api/BackData.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="393" column="5" lean-forward="true" selection-start-line="393" selection-start-column="5" selection-end-line="393" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeMoneyLog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="140" selection-end-column="1" />
-          <folding>
-            <marker date="1518083197000" expanded="true" signature="656:681" ph="select * fro... we_moneyLog" />
-            <marker date="1518083197000" expanded="true" signature="656:682" ph="select * fro... we_moneyLog" />
-            <marker date="1518083197000" expanded="true" signature="656:688" ph="select * fro... we_moneyLog" />
-            <marker date="1518083197000" expanded="true" signature="1209:1250" ph="select * fro... we_moneyLog" />
-            <marker date="1518083197000" expanded="true" signature="1797:1822" ph="select * fro... we_moneyLog" />
-            <marker date="1518083197000" expanded="true" signature="3531:3566" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Model/NotORM.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="115" column="51" lean-forward="false" selection-start-line="115" selection-start-column="51" selection-end-line="115" selection-end-column="51" />
-          <folding>
-            <marker date="1519291543000" expanded="true" signature="3249:3371" ph="insert into u_log... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Config/admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="44" column="42" lean-forward="false" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeUserWallet.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="132" column="28" lean-forward="false" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
-          <folding>
-            <marker date="1519291430000" expanded="true" signature="679:718" ph="select * fro... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="1305:1350" ph="select * fro... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="1922:1988" ph="select sum(m... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="2563:2605" ph="select * fro... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="2563:2630" ph="select * fro... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="2563:2640" ph="select * fro... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="3195:3222" ph="select * fro... we_userWallet" />
-            <marker date="1519291430000" expanded="true" signature="4075:4181" ph="update we_us... " />
-            <marker date="1519291430000" expanded="true" signature="4292:4553" ph="insert into we_moneyLog... " />
-            <marker date="1519291430000" expanded="true" signature="6254:6358" ph="update we_us... " />
-            <marker date="1519291430000" expanded="true" signature="6469:6723" ph="insert into we_moneyLog... " />
-            <marker date="1519291430000" expanded="true" signature="6811:6913" ph="update we_us... " />
-            <marker date="1519291430000" expanded="true" signature="7023:7270" ph="insert into we_moneyLog... " />
-            <marker date="1519291430000" expanded="true" signature="8428:8465" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ResCode/WE.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="10" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeExchangeLog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="26" column="20" lean-forward="false" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
-          <folding>
-            <marker date="1519290749000" expanded="true" signature="665:694" ph="select * fro... we_exchangeLog" />
-            <marker date="1519290749000" expanded="true" signature="1221:1265" ph="select count... we_exchangeLog" />
-            <marker date="1519290749000" expanded="true" signature="1812:1840" ph="select * fro... we_exchangeLog" />
-            <marker date="1519290749000" expanded="true" signature="2384:2433" ph="select * fro... we_exchangeLog" />
-            <marker date="1519290749000" expanded="true" signature="4127:4165" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Public/we/phpinfo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeConfig.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="85" column="67" lean-forward="true" selection-start-line="85" selection-start-column="61" selection-end-line="85" selection-end-column="67" />
-          <folding>
-            <marker date="1517557258000" expanded="true" signature="879:1060" ph="select a.*,b... we_matchComment" />
-            <marker date="1517557258000" expanded="true" signature="1603:1653" ph="select * fro... we_config" />
-            <marker date="1517557258000" expanded="true" signature="2175:2210" ph="select * fro... we_config" />
-            <marker date="1517557258000" expanded="true" signature="3906:3939" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeNewConsultClass.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1131">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1517903282000" expanded="true" signature="737:804" ph="select * fro... we_newConsultClass" />
-            <marker date="1517903282000" expanded="true" signature="1354:1419" ph="select * fro... we_newConsultClass" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeNewConsult.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="38" column="34" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="34" />
-          <folding>
-            <marker date="1519377989000" expanded="true" signature="960:1118" ph="select *,(se... we_newConsult" />
-            <marker date="1519377989000" expanded="true" signature="1890:2048" ph="select *,(se... we_newConsult" />
-            <marker date="1519377989000" expanded="true" signature="1890:2049" ph="select *,(se... we_newConsult" />
-            <marker date="1519377989000" expanded="true" signature="2588:2655" ph="select count... we_newConsult" />
-            <marker date="1519377989000" expanded="true" signature="3214:3482" ph="select a.*,b... we_newConsult" />
-            <marker date="1519377989000" expanded="true" signature="5208:5258" ph="update we_ne... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeConsult.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="66" lean-forward="false" selection-start-line="58" selection-start-column="66" selection-end-line="58" selection-end-column="66" />
-          <folding>
-            <marker date="1519378072000" expanded="true" signature="954:1109" ph="select *,(se... we_consult" />
-            <marker date="1519378072000" expanded="true" signature="2433:2588" ph="select *,(se... we_consult" />
-            <marker date="1519378072000" expanded="true" signature="3148:3212" ph="select count... we_consult" />
-            <marker date="1519378072000" expanded="true" signature="3771:4036" ph="select a.*,b... we_consult" />
-            <marker date="1519378072000" expanded="true" signature="5762:5808" ph="update we_co... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeMatchNews.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-952">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1517903156000" expanded="true" signature="663:707" ph="select * fro... we_matchNews" />
-            <marker date="1517903156000" expanded="true" signature="1253:1295" ph="select * fro... we_matchNews" />
-            <marker date="1517903156000" expanded="true" signature="3030:3094" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeMatchComment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1517903017000" expanded="true" signature="696:809" ph="select a.*,b... we_matchComment" />
-            <marker date="1517903017000" expanded="true" signature="2492:2591" ph="select a.*,b... we_matchComment" />
-            <marker date="1517903017000" expanded="true" signature="3121:3213" ph="select count... we_matchComment" />
-            <marker date="1517903017000" expanded="true" signature="3805:3947" ph="select *,uni... we_matchBespeak" />
-            <marker date="1517903017000" expanded="true" signature="4513:4582" ph="select * fro... we_matchComment" />
-            <marker date="1517903017000" expanded="true" signature="6393:6432" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeVideoConsult.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="66" column="33" lean-forward="false" selection-start-line="66" selection-start-column="33" selection-end-line="66" selection-end-column="33" />
-          <folding>
-            <marker date="1519378354000" expanded="true" signature="1448:1680" ph="select a.*,(... we_videoConsult" />
-            <marker date="1519378354000" expanded="true" signature="2587:2819" ph="select a.*,(... we_videoConsult" />
-            <marker date="1519378354000" expanded="true" signature="2587:2820" ph="select a.*,(... we_videoConsult" />
-            <marker date="1519378354000" expanded="true" signature="3359:3474" ph="select count... we_videoConsult" />
-            <marker date="1519378354000" expanded="true" signature="4033:4303" ph="select a.*,b... we_videoConsult" />
-            <marker date="1519378354000" expanded="true" signature="6029:6081" ph="update we_vi... " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeNewConsult.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="34" lean-forward="false" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Api/BackMoney.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="69" column="36" lean-forward="false" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeMoney.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="131" column="68" lean-forward="false" selection-start-line="131" selection-start-column="68" selection-end-line="131" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/Bzy/Lite.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1792">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PhpSimple/Lite.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="142" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/WeNbaMatchPlayer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
-          <folding>
-            <marker date="1517557258000" expanded="true" signature="675:747" ph="select * fro... we_nbaMatchPlayer" />
-            <marker date="1517557258000" expanded="true" signature="1280:1415" ph="select * fro... we_nbaMatchPlayer" />
-            <marker date="1517557258000" expanded="true" signature="1942:1991" ph="select * fro... we_nbaMatchPlayer" />
-            <marker date="1517557258000" expanded="true" signature="3599:3640" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeData.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5">
-          <caret line="700" column="13" lean-forward="false" selection-start-line="700" selection-start-column="9" selection-end-line="700" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/UUserRole.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="225" column="9" lean-forward="false" selection-start-line="218" selection-start-column="8" selection-end-line="225" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Model/UserToken.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="43" column="73" lean-forward="false" selection-start-line="43" selection-start-column="64" selection-end-line="43" selection-end-column="73" />
-          <folding>
-            <marker date="1517721319000" expanded="true" signature="741:837" ph="insert into user_token... " />
-            <marker date="1517721319000" expanded="true" signature="1393:1457" ph="select * fro... user_token" />
-            <marker date="1517721319000" expanded="true" signature="2028:2096" ph="select * fro... user_token" />
-            <marker date="1517721319000" expanded="true" signature="2675:2737" ph="delete from " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Library/Redis/Lite.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="401" column="27" lean-forward="false" selection-start-line="401" selection-start-column="20" selection-end-line="401" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Api/WeUser.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="124" column="35" lean-forward="false" selection-start-line="124" selection-start-column="35" selection-end-line="124" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/we/Api/WeOpen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="216" column="30" lean-forward="false" selection-start-line="216" selection-start-column="30" selection-end-line="216" selection-end-column="30" />
+        <state relative-caret-position="94">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/we/Model/WeUser.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="212" column="7" lean-forward="true" selection-start-line="212" selection-start-column="7" selection-end-line="212" selection-end-column="7" />
+        <state relative-caret-position="171">
+          <caret line="93" column="7" lean-forward="true" selection-start-line="93" selection-start-column="7" selection-end-line="93" selection-end-column="7" />
           <folding>
             <marker date="1518074247000" expanded="true" signature="671:693" ph="select * fro... we_user" />
             <marker date="1518074247000" expanded="true" signature="1259:1296" ph="select COUNT... we_user" />
@@ -902,42 +512,493 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeUser.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/json/json.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2751">
-          <caret line="126" column="26" lean-forward="false" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
+        <state relative-caret-position="186">
+          <caret line="123" column="9" lean-forward="false" selection-start-line="123" selection-start-column="9" selection-end-line="123" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Public/we/endMatch.php">
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeTask.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="32" />
+        <state relative-caret-position="521">
+          <caret line="466" column="19" lean-forward="false" selection-start-line="466" selection-start-column="19" selection-end-line="466" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Config/init.sql">
+    <entry file="file://$PROJECT_DIR$/Config/admin.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1006">
-          <caret line="688" column="59" lean-forward="false" selection-start-line="688" selection-start-column="59" selection-end-line="688" selection-end-column="59" />
+        <state relative-caret-position="431">
+          <caret line="74" column="14" lean-forward="false" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeRebate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="78" column="25" lean-forward="true" selection-start-line="78" selection-start-column="25" selection-end-line="78" selection-end-column="25" />
+          <folding>
+            <marker date="1520327541000" expanded="true" signature="661:685" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="1212:1251" ph="select count... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="1798:1821" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="2413:2436" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="2413:2452" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="2413:2461" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="2413:2473" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="2413:2481" ph="select * fro... we_rebate" />
+            <marker date="1520327541000" expanded="true" signature="4191:4224" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ResCode/WE.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="84" column="12" lean-forward="false" selection-start-line="84" selection-start-column="5" selection-end-line="84" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/DI.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="32" column="44" lean-forward="false" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/ApiFactory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/superglobals/_superglobals.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="106" column="0" lean-forward="false" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="54" column="32" lean-forward="true" selection-start-line="54" selection-start-column="32" selection-end-line="54" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="35" column="34" lean-forward="true" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeLiveStream.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="92" column="32" lean-forward="true" selection-start-line="92" selection-start-column="32" selection-end-line="92" selection-end-column="32" />
+          <folding>
+            <marker date="1520407543000" expanded="true" signature="659:698" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="1249:1276" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="1824:1866" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="1824:1867" ph="select count... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="1824:1873" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="2422:2449" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="2422:2450" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="2422:2456" ph="select * fro... we_liveStream" />
+            <marker date="1520407543000" expanded="true" signature="4166:4207" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeMatchComment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="209" column="13" lean-forward="false" selection-start-line="209" selection-start-column="13" selection-end-line="209" selection-end-column="13" />
+          <folding>
+            <marker date="1520411641000" expanded="true" signature="696:809" ph="select a.*,b... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="696:831" ph="select a.*,b... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="696:843" ph="select a.*,b... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="696:844" ph="select a.*,b... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="2508:2607" ph="select a.*,b... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="3137:3229" ph="select count... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="3821:3963" ph="select *,uni... we_matchBespeak" />
+            <marker date="1520411641000" expanded="true" signature="4529:4598" ph="select * fro... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="5151:5192" ph="select * fro... we_matchComment" />
+            <marker date="1520411641000" expanded="true" signature="7666:7705" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeLiveStreamBind.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="56" column="25" lean-forward="false" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="25" />
+          <folding>
+            <marker date="1517902970000" expanded="true" signature="691:734" ph="select * fro... we_liveStreamBind" />
+            <marker date="1517902970000" expanded="true" signature="1311:1355" ph="select * fro... we_liveStreamBind" />
+            <marker date="1517902970000" expanded="true" signature="3078:3119" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="38" column="28" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+          <folding>
+            <marker date="1520216526000" expanded="true" signature="953:1108" ph="select *,(se... we_consult" />
+            <marker date="1520216526000" expanded="true" signature="2461:2616" ph="select *,(se... we_consult" />
+            <marker date="1520216526000" expanded="true" signature="3176:3240" ph="select count... we_consult" />
+            <marker date="1520216526000" expanded="true" signature="3799:4064" ph="select a.*,b... we_consult" />
+            <marker date="1520216526000" expanded="true" signature="5825:5871" ph="update we_co... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeComment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+          <folding>
+            <marker date="1520331892000" expanded="true" signature="1018:1423" ph="select a.*,b... we_comment" />
+            <marker date="1520331892000" expanded="true" signature="1050:1113" ph="select count... we_commentLike" />
+            <marker date="1520331892000" expanded="true" signature="1980:2171" ph="select a.*,b... we_comment" />
+            <marker date="1520331892000" expanded="true" signature="2012:2075" ph="select count... we_commentLike" />
+            <marker date="1520331892000" expanded="true" signature="2724:2830" ph="select count... we_comment" />
+            <marker date="1520331892000" expanded="true" signature="3402:3438" ph="select * fro... we_comment" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/Redis/Lite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="66" column="32" lean-forward="false" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Api/WeMatch.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="50" column="36" lean-forward="true" selection-start-line="50" selection-start-column="36" selection-end-line="50" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeNewConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="21" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeVideoConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
+          <folding>
+            <marker date="1519378354000" expanded="true" signature="1448:1680" ph="select a.*,(... we_videoConsult" />
+            <marker date="1519378354000" expanded="true" signature="2587:2820" ph="select a.*,(... we_videoConsult" />
+            <marker date="1519378354000" expanded="true" signature="3359:3474" ph="select count... we_videoConsult" />
+            <marker date="1519378354000" expanded="true" signature="4033:4303" ph="select a.*,b... we_videoConsult" />
+            <marker date="1519378354000" expanded="true" signature="6029:6081" ph="update we_vi... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeVideoConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="40" column="71" lean-forward="true" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/redis/Redis.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="1520" column="36" lean-forward="true" selection-start-line="1520" selection-start-column="7" selection-end-line="1520" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Model/NotORM.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="32" column="20" lean-forward="false" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+          <folding>
+            <marker date="1519291543000" expanded="true" signature="3249:3371" ph="insert into u_log... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeMatchNews.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <marker date="1517903156000" expanded="true" signature="663:707" ph="select * fro... we_matchNews" />
+            <marker date="1517903156000" expanded="true" signature="1253:1295" ph="select * fro... we_matchNews" />
+            <marker date="1517903156000" expanded="true" signature="3030:3094" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeBzy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="39" column="20" lean-forward="false" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+          <folding>
+            <marker date="1520422866000" expanded="true" signature="1068:1250" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="2021:2209" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="3138:3340" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="3397:3579" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="4450:4650" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="4706:4894" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="5464:5503" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="6076:6191" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="6713:6751" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="7395:7433" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="7535:7573" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="8123:8155" ph="select * fro... we_bzy" />
+            <marker date="1520422866000" expanded="true" signature="9789:9854" ph="update we_bz... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeData.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="292" column="5" lean-forward="true" selection-start-line="292" selection-start-column="5" selection-end-line="292" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Public/init.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="55" column="13" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Cache/Redis.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="56" column="68" lean-forward="false" selection-start-line="56" selection-start-column="68" selection-end-line="56" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Api/WeOpen.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4578">
+          <caret line="529" column="32" lean-forward="false" selection-start-line="529" selection-start-column="32" selection-end-line="529" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/UUserRole.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="274" column="78" lean-forward="false" selection-start-line="274" selection-start-column="78" selection-end-line="274" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Api/BackRole.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="238" column="30" lean-forward="false" selection-start-line="238" selection-start-column="30" selection-end-line="238" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/ULog.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="56" column="23" lean-forward="false" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+          <folding>
+            <marker date="1520578571000" expanded="true" signature="641:669" ph="select a.* f... u_log" />
+            <marker date="1520578571000" expanded="true" signature="641:675" ph="select a.* f... u_log" />
+            <marker date="1520578571000" expanded="true" signature="1200:1239" ph="select count... u_log" />
+            <marker date="1520578571000" expanded="true" signature="1200:1240" ph="select count... u_log" />
+            <marker date="1520578571000" expanded="true" signature="1834:1961" ph="insert into u_log... " />
+            <marker date="1520578571000" expanded="true" signature="2523:2552" ph="delete from " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Filter/SessionSign.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="35" column="137" lean-forward="false" selection-start-line="35" selection-start-column="137" selection-end-line="35" selection-end-column="137" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PhpSimple/simplehtmldom_1_5/simple_html_dom.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="368" column="43" lean-forward="true" selection-start-line="368" selection-start-column="7" selection-end-line="368" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config/init2.0.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="83" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Public/we/loop.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="58" lean-forward="false" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="58" />
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Filter/SessionSign.php">
+    <entry file="file://$PROJECT_DIR$/we/Model/WeNewConsult.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="75" lean-forward="false" selection-start-line="24" selection-start-column="75" selection-end-line="24" selection-end-column="75" />
+        <state relative-caret-position="216">
+          <caret line="165" column="13" lean-forward="false" selection-start-line="165" selection-start-column="13" selection-end-line="165" selection-end-column="13" />
+          <folding>
+            <marker date="1520590990000" expanded="true" signature="961:1119" ph="select *,(se... we_newConsult" />
+            <marker date="1520590990000" expanded="true" signature="1890:2049" ph="select *,(se... we_newConsult" />
+            <marker date="1520590990000" expanded="true" signature="2588:2655" ph="select count... we_newConsult" />
+            <marker date="1520590990000" expanded="true" signature="3222:3274" ph="select * fro... we_newConsult" />
+            <marker date="1520590990000" expanded="true" signature="3826:4094" ph="select a.*,b... we_newConsult" />
+            <marker date="1520590990000" expanded="true" signature="5820:5870" ph="update we_ne... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeNewConsultClass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1">
+          <caret line="37" column="41" lean-forward="true" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+          <folding>
+            <marker date="1520590463000" expanded="true" signature="675:742" ph="select * fro... we_newConsultClass" />
+            <marker date="1520590463000" expanded="true" signature="1292:1357" ph="select * fro... we_newConsultClass" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Model/WeConsultAuthor.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="94" column="29" lean-forward="true" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
+          <folding>
+            <marker date="1520590199000" expanded="true" signature="751:799" ph="select * fro... we_consultAuthor" />
+            <marker date="1520590199000" expanded="true" signature="1355:1410" ph="select count... we_consultAuthor" />
+            <marker date="1520590199000" expanded="true" signature="1965:2007" ph="select * fro... we_consultAuthor" />
+            <marker date="1520590199000" expanded="true" signature="2564:2621" ph="select * fro... we_consultAuthor" />
+            <marker date="1520590199000" expanded="true" signature="2564:2622" ph="select * fro... we_consultAuthor" />
+            <marker date="1520590199000" expanded="true" signature="2564:2630" ph="select * fro... we_consultAuthor" />
+            <marker date="1520590199000" expanded="true" signature="4382:4430" ph="update we_co... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PhpSimple/Lite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="216" column="40" lean-forward="false" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Public/we/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Public/we/endMatch.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config/init.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="1238" column="56" lean-forward="false" selection-start-line="1238" selection-start-column="56" selection-end-line="1238" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config/sys.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="32" column="34" lean-forward="false" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Config/dbs.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="32" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/Bzy/Lite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="74" column="24" lean-forward="false" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Api/BackConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="239" column="33" lean-forward="true" selection-start-line="239" selection-start-column="33" selection-end-line="239" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Api/BackData.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="124" column="5" lean-forward="false" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
           <folding />
         </state>
       </provider>

@@ -1,0 +1,905 @@
+<?php
+class Domain_WeData
+{
+    /**
+     * 发送短信
+     * @param $data
+     * @return mixed
+     */
+    public function sendMsg($data){
+        $numKey = 'msgNum_'.$data['phone'];
+        $codeKey = 'msgCode_'.$data['phone'];
+        $hasNum = DI() -> redis -> getInfo($numKey);
+
+        if($hasNum!=null && $hasNum >=5)
+            return DI()->ResCode->get("WE.msgError");
+        if($hasNum == null)
+            $hasNum = 0;
+        $rand = rand(1000,9999);
+        $randCode = '#code#='.$rand;
+        $msg = DI()->jhdx->sendMsg($data['phone'],$randCode);
+        DI()->redis->set_time($codeKey,$rand,900);
+        if($hasNum == 0){
+            $hasNum++;
+            DI() -> redis -> set_time($numKey,$hasNum,43200);
+        }else{
+            $hasNum++;
+            DI() -> redis -> save_time($numKey,$hasNum);
+        }
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $msg;
+        return $ret;
+    }
+
+    /**
+     * 验证短信
+     * @return mixed
+     */
+    public function confirmMsg($data){
+//        $codeKey = 'msgCode_'.$data['phone'];
+//        $hasCode = DI() -> redis -> getInfo($codeKey);
+//        if($hasCode == null)
+//            return 0;
+//        if($data['code'] == $hasCode)
+            return 1;
+//        return 0;
+    }
+
+    /**
+     * 单个推送
+     * @param $userId 用户id
+     * @param $title 推送标题
+     * @param $transmission 透传内容
+     * @param $text 推送内容
+     * @return array
+     */
+    public function pushCli($userId,$title,$transmission,$text,$type = 0){
+        $userModel = new Model_WeUser();
+        $msgModel = new Model_WeMsg();
+        $hasUser = $userModel -> getUserId($userId);
+        if($hasUser == null )
+            return null;
+        if($hasUser['pushClientid'] != null && $hasUser['pushButton'] == 1)
+            DI()->getui->pushMessageToSingle($title,$transmission,$text,$hasUser['pushClientid']);
+        $msg = $msgModel -> insertMsg(['userId' => $userId,'msgTitle' => $title,'msgText' => $text,'transmission' => $transmission,'type'=>$type]);
+        return $msg;
+    }
+
+
+    /**
+     * 群推
+     * @param $title 推送标题
+     * @param $transmission 透传内容
+     * @param $text 推送内容
+     * @return mixed
+     */
+    public function pushAll($title,$transmission,$text){
+        return DI()->getui->pushMessageToApp($title,$transmission,$text);
+    }
+
+
+    /**
+     * 获取当日足球比赛数据
+     */
+    public function jczq(){
+        $dateList[] = $date = date("Ymd");
+        $dateList[] = $date = date("Ymd",strtotime("+1 day"));
+        $dateList[] = $date = date("Ymd",strtotime("+2 day"));
+        $action = "/v1/data/jczq/phase";
+        try{
+            foreach ($dateList as $k=>$v){
+                $this->getMatchData($v,$action);
+            }
+            return 1;
+        }catch (ErrorException $e){
+            return $e;
+        }
+    }
+
+
+    /**
+     * 获取当日足球比赛数据
+     */
+    public function jcnq(){
+        $dateList[] = $date = date("Ymd");
+        $dateList[] = $date = date("Ymd",strtotime("+1 day"));
+        $dateList[] = $date = date("Ymd",strtotime("+2 day"));
+        $action = "/v1/data/jclq/phase";
+        try{
+            foreach ($dateList as $k=>$v){
+                $this->getMatchData($v,$action);
+            }
+            return 1;
+        }catch (ErrorException $e){
+            return $e;
+        }
+    }
+
+    /**
+     * 获取爆料数据
+     */
+    public function getMatchNews(){
+        $dateList[] = $date = date("Ymd");
+        $dateList[] = $date = date("Ymd",strtotime("+1 day"));
+        $dateList[] = $date = date("Ymd",strtotime("+2 day"));
+        $action = "/v1/cms/news/jczq/phase";
+        try{
+            foreach ($dateList as $k=>$v){
+                $this->getMatchNewsData($v,$action);
+            }
+            return 1;
+        }catch (ErrorException $e){
+            return $e;
+        }
+    }
+
+
+    /**
+     * 获取列表数据
+     * @param $date
+     * @param $action
+     */
+    public function getMatchData($date,$action){
+        $model = new Model_WeBzy();
+        $data = [
+            'phase'=>$date
+        ];
+        $ret = DI()->bzy ->getData($data,$action);
+        if($ret != null && isset($ret['data']['matchList'])){
+            foreach ($ret['data']['matchList'] as $k => $v){
+                $newMach = [];
+                $newMach['matchNum'] = isset($v['matchNum'])?$v['matchNum']:null;
+                $newMach['phase'] = isset($v['phase'])?$v['phase']:null;
+                $newMach['kickoffTime'] = isset($v['kickoffTime'])?$v['kickoffTime']:null;
+                $newMach['homeId'] = isset($v['homeId'])?$v['homeId']:null;
+                $newMach['homeName'] = isset($v['homeName'])?$v['homeName']:null;
+                $newMach['homeLogo'] = isset($v['homeLogo'])?$v['homeLogo']:null;
+                $newMach['awayId'] = isset($v['awayId'])?$v['awayId']:null;
+                $newMach['awayName'] = isset($v['awayName'])?$v['awayName']:null;
+                $newMach['awayLogo'] = isset($v['awayLogo'])?$v['awayLogo']:null;
+                $newMach['leagueId'] = isset($v['leagueId'])?$v['leagueId']:null;
+                $newMach['leagueName'] = isset($v['leagueName'])?$v['leagueName']:null;
+                $newMach['leagueColor'] = isset($v['leagueColor'])?$v['leagueColor']:null;
+                $newMach['leagueName'] = isset($v['leagueName'])?$v['leagueName']:null;
+                switch ($action){
+                    case "/v1/data/jclq/phase":
+                        $newMach['leagueType'] = 2;
+                        break;
+                    case "/v1/data/jczq/phase":
+                        $newMach['leagueType'] = 1;
+                        break;
+                }
+                $has = $model ->getOne($newMach['matchNum']);
+                if($newMach['leagueType'] == 2 && $newMach['leagueId'] != 115)
+                    continue;
+                if($newMach['matchNum'] != null && $has == null){
+                    $model -> insert($newMach);
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取爆料数据
+     * @param $date
+     * @param $action
+     */
+    public function getMatchNewsData($date,$action){
+        $model = new Model_WeMatchNews();
+        $data = [
+            'phase'=>$date
+        ];
+        $ret = DI()->bzy ->getData($data,$action);
+        if($ret != null && isset($ret['data']['newsList'])){
+            foreach ($ret['data']['newsList'] as $k => $v){
+                $newMach = [];
+                $newMach['newsId'] = isset($v['newsId'])?$v['newsId']:null;
+                $newMach['title'] = isset($v['title'])?$v['title']:null;
+                $newMach['matchNum'] = isset($v['matchNum'])?$v['matchNum']:null;
+                $newMach['phase'] = isset($v['phase'])?$v['phase']:null;
+                $newMach['content'] = isset($v['content'])?$v['content']:null;
+                $newMach['publishTime'] = isset($v['publishTime'])?$v['publishTime']:null;
+                $newMach['authorName'] = isset($v['authorName'])?$v['authorName']:null;
+                $newMach['newsLevel'] = isset($v['newsLevel'])?$v['newsLevel']:null;
+                $newMach['newsType'] = isset($v['newsType'])?$v['newsType']:null;
+                $newMach['labels'] = isset($v['labels'])?$v['labels']:null;
+                $newMach['thumbnail'] = isset($v['thumbnail'])?$v['thumbnail']:null;
+                $newMach['teamType'] = isset($v['teamType'])?$v['teamType']:null;
+                $has = $model ->getOne($newMach['newsId']);
+                if($newMach['newsId'] != null && $has == null){
+                    $model -> insert($newMach);
+                }
+            }
+        }
+    }
+
+    /**
+     * 比赛头两个数据
+     * @return array
+     */
+    public function getMatchAfterTwo(){
+        $model = new Model_WeBzy();
+        $modelBespeak = new Model_WeMatchBespeak();
+        $ret = $model -> getListAfterTwo();
+        foreach ($ret as $k => $item) {
+            $ret[$k]['hasBespeak'] = 0;
+            $has = $modelBespeak ->getByFid(['fid'=>$item['id']]);
+            if( $has != null)
+                $ret[$k]['hasBespeak'] = 1;
+        }
+        return $ret;
+    }
+
+    /**
+     * 比赛详情
+     * @param $data
+     * @return array
+     */
+    public function getMatchDetail($data){
+        $model = new Model_WeBzy();
+        $modelBespeak = new Model_WeMatchBespeak();
+        $ret = $model -> getMatchDetail($data);
+        if($ret == null)
+            return null;
+        $ret['hasBespeak'] = 0;
+        $has = $modelBespeak ->getByFid(['fid'=>$ret['id']]);
+        if( $has != null)
+            $ret['hasBespeak'] = 1;
+        return $ret;
+    }
+
+    /**
+     * 比赛之前的列表
+     * @param $data
+     * @return array
+     */
+    public function getMatchAfter($data){
+        $model = new Model_WeBzy();
+        $modelBespeak = new Model_WeMatchBespeak();
+        $ret = $model -> getListAfter($data);
+        foreach ($ret as $k => $item) {
+            $ret[$k]['hasBespeak'] = 0;
+            $has = $modelBespeak ->getByFid(['fid'=>$item['id']]);
+            if( $has != null)
+                $ret[$k]['hasBespeak'] = 1;
+        }
+        return $ret;
+    }
+
+    /**
+     * 比赛之后的列表
+     * @param $data
+     * @return array
+     */
+    public function getMatchBefore($data){
+        $model = new Model_WeBzy();
+        $modelBespeak = new Model_WeMatchBespeak();
+        $ret = $model -> getListBefore($data);
+        foreach ($ret as $k => $item) {
+            $ret[$k]['hasBespeak'] = 0;
+            $has = $modelBespeak ->getByFid(['fid'=>$item['id']]);
+            if( $has != null)
+                $ret[$k]['hasBespeak'] = 1;
+        }
+        return $ret;
+    }
+
+    /**
+     * 咨询修改
+     * @param $data
+     * @return array
+     */
+    public function UpMatchDetail($data){
+        $model = new Model_WeBzy();
+        return $model -> updateBzy($data);
+    }
+
+    /**
+     * 发起预约
+     * @param $data
+     * @return array
+     */
+    public function MakeBespeak($data){
+        $model = new Model_WeMatchBespeak();
+        $matchModel = new Model_WeBzy();
+        $hasMatch = $matchModel -> getById($data['fid']);
+
+        if($hasMatch == null)
+            return DI() -> ResCode -> get("WE.noMatch");
+
+        $startTime = strtotime($hasMatch['kickoffTime']);
+        $now = time();
+
+        if($startTime<$now)
+            return DI() -> ResCode -> get("WE.noMatch");
+
+        $has = $model -> getByFid($data);
+        if($has!=null)
+            return DI() -> ResCode -> get("WE.hasBespeak");
+        $data = $model -> insertMatchBespeak($data);
+        $ret = DI() -> ResCode -> get("WE.Success");
+        $ret['data'] = $data;
+        return $ret;
+    }
+
+    /**
+     * 删除预约
+     * @param $data
+     * @return array
+     */
+    public function DeleteBespeak($data){
+        $model = new Model_WeMatchBespeak();
+        $model -> deleteMatchBespeak($data);
+        $ret = DI() -> ResCode -> get("WE.Success");
+        return $ret;
+    }
+
+    /**
+     * 删除预约
+     * @param $data
+     * @return array
+     */
+    public function BespeakList($data){
+        $model = new Model_WeMatchBespeak();
+        $info = $model -> getList($data);
+        $ret = DI() -> ResCode -> get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 推送所有预约
+     */
+    public function PushBespeakList(){
+        $model = new Model_WeMatchBespeak();
+        $userModel = new Model_WeUser();
+        $bzyModel = new Model_WeBzy();
+
+        $pushList = $model -> getPushList();
+
+        $time = time();
+        foreach ($pushList as $k => $v){
+
+            if($v['pushTime'] - $time < 300){
+                $hasMatch = $bzyModel -> getById($v['fid']);
+
+                if($hasMatch != null){
+                    $title = '赛事即将开始';
+                    $transmission = "5,".$v['fid'];
+                    $text = '您预约的比赛即将开始 '.$hasMatch['homeName'].' : '.$hasMatch['awayName'];
+                    $user = $userModel -> getUserId($v['userId']);
+                    $this->pushCli($user['id'],$title,$transmission,$text,5);
+                }
+                $model ->updateMatchBespeak(['id'=>$v['id'],'isPush1'=>1,'isPush2'=>1]);
+
+                continue;
+            }
+
+            if($v['pushTime'] - $time < 1800 && $v['isPush1'] != 1){
+                $hasMatch = $bzyModel -> getById($v['fid']);
+
+                if($hasMatch != null){
+                    $title = '赛事30分钟后将开始';
+                    $transmission = "5,".$v['fid'];
+                    $text = '您预约的比赛30分钟后将开始 '.$hasMatch['homeName'].' : '.$hasMatch['awayName'];
+                    $user = $userModel -> getUserId($v['userId']);
+                    $this->pushCli($user['id'],$title,$transmission,$text,5);
+                }
+                $model ->updateMatchBespeak(['id'=>$v['id'],'isPush1'=>1]);
+
+                continue;
+            }
+        }
+    }
+
+    /**
+     * 爆料列表
+     * @param $data
+     * @return array
+     */
+    public function MatchNewsList($data){
+        $model = new Model_WeMatchNews();
+        $info = $model -> getList($data);
+        return $info;
+    }
+
+    /**
+     * 插入评论
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertComment($data){
+        $consultModel = new Model_WeBzy();
+        $consult = $consultModel ->getById($data['fid']);
+        if($consult == null)
+            return null;
+        $model = new Model_WeMatchComment();
+        $info = $model -> insertMatchComment($data);
+        return $info;
+    }
+
+
+    /**
+     * 删除
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function BackMatchCommentDelete($data){
+        $model = new Model_WeMatchComment();
+        $commentData = $model -> getComment($data['id']);
+        if($commentData == null || $commentData['status'] = 0)
+            return null;
+        $info = $model -> deleteComment($data['id']);
+        return $info;
+    }
+
+    /**
+     * 评论列表
+     * @param $allParams
+     * @return array
+     */
+    public function MatchCommentList($allParams){
+        $model = new Model_WeMatchComment();
+        $info = $model -> getList($allParams);
+        return $info;
+    }
+
+
+    /**
+     * 评论列表
+     * @param $allParams
+     * @return array $res
+     */
+    public function BackMatchCommentList($allParams){
+        $model = new Model_WeMatchComment();
+        $sql = " where a.fid = {$allParams['fid']} && a.status = 1";
+        if(isset($allParams['type']) && ($allParams['type'] == 1 || $allParams['type'] ==2))
+            $sql .= " && a.type = {$allParams['type']} ";
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return DI()->ResCode->get("WE.Error");
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        $allPage = $model -> getBackPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER by a.createTime desc 
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getBackList($sql);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        $res['allPage'] = $allPage;
+        return $res;
+    }
+
+    /**
+     * 获取竞彩模块开关配置
+     * @return array
+     */
+    public function GetAdvertisingSwitch(){
+        $model = new Model_WeConfig();
+        $info = $model -> getById(['id'=>1]);
+        return $info;
+    }
+
+    /**
+     * 竞彩模块开关设置
+     * @param $data
+     * @return array
+     */
+    public function etAdvertisingSwitch($data){
+        if($data['configData']!=1 && $data['configData']!=2)
+            return null;
+        $model = new Model_WeConfig();
+        $data['id'] = 1;
+        $info = $model -> updateConfig($data);
+        return $info;
+    }
+
+    /**
+     * 获取某个类型的广告列表
+     * @param $data
+     * @return array
+     */
+    public function GetAdvertisingPosition($data){
+        $model = new Model_WeAdvertising();
+        $info = $model -> getByPosition($data);
+        return $info;
+    }
+
+    /**
+     * 添加广告
+     * @param $data
+     * @return array
+     */
+    public function insertAdvertising($data){
+        $model = new Model_WeAdvertising();
+        $info = $model -> insertAdvertising($data);
+        return $info;
+    }
+
+    /**
+     * 修改广告
+     * @param $data
+     * @return array
+     */
+    public function updateAdvertising($data){
+        $model = new Model_WeAdvertising();
+        $info = $model -> updateAdvertising($data);
+        return $info;
+    }
+
+    /**
+     * 删除广告
+     * @param $data
+     * @return array
+     */
+    public function deleteAdvertising($data){
+        $model = new Model_WeAdvertising();
+        $info = $model -> deleteAdvertising($data);
+        return $info;
+    }
+
+    /**
+     * 广告列表
+     * @param $data
+     * @return array
+     */
+    public function AdvertisingList($data){
+        $model = new Model_WeAdvertising();
+        $info = $model -> getAdvertisingList($data);
+        return $info;
+    }
+
+
+    /**
+     * 广告Log列表
+     * @param $allParams
+     * @return array
+     */
+    public function AdvertisingLogList($allParams){
+        $model = new Model_WeAdvertisingLog();
+        $sql = "";
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        $allPage = $model -> getAdvertisingPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER by createTime desc 
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getAdvertisingList($sql);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        $res['allPage'] = $allPage;
+        return $info;
+    }
+
+
+    /**
+     * 广告点击
+     * @param $data
+     * @return array
+     */
+    public function addAdvertisingLog($data){
+        $modelLog = new Model_WeAdvertisingLog();
+        $model = new Model_WeAdvertising();
+        $has = $model->getById(['id'=>$data['fid']]);
+        if($has == null)
+            return null;
+        $data['type'] = 1;
+        $data['date'] = date("Y-m-d");
+        $has = $modelLog -> getAdvertisingOne($data);
+        if($has != null)
+            $info = $modelLog -> insertAdvertisingLog($data);
+        else{
+            $has['num'] = $has['num']++;
+            $info = $modelLog -> updateAdvertising($has);
+        }
+        return $info;
+    }
+
+    /**
+     * 关于
+     * @return array
+     */
+    public function About(){
+        $model = new Model_WeConfig();
+        $data['id'] = 2;
+        $info = $model -> getById($data);
+        return $info;
+    }
+
+    /**
+     * 关于修改
+     * @param $data
+     * @return array
+     */
+    public function setAbout($data){
+        $model = new Model_WeConfig();
+        $data['id'] = 2;
+        $info = $model -> updateConfig($data);
+        return $info;
+    }
+
+    /**
+     * 插入赛事历史数据
+     * @param $data
+     * @return array
+     */
+    public function getMatchIdListByNBA($data){
+        $model = new Model_WeNbaMatchHistory();
+        foreach ($data as $k => $v) {
+            if (!isset($v['matchId']))
+                continue;
+            $has = $model -> getDataById($v['matchId']);
+            if($has != null)
+                continue;
+            $model -> insertData($v);
+        }
+        return null;
+    }
+
+    /**
+     * 爬nba队员数据
+     * @return null
+     */
+    public function getNbaMatchTeamData(){
+        $modelBind = new Model_WeNbaBind();
+        $modelPlayer = new Model_WeNbaMatchPlayer();
+        $nbaTeamList = $modelBind -> getAllData();
+        foreach ($nbaTeamList as $item) {
+            $matchList = DI()->matchPs -> getNBATeamInfoList($item['okooId']);
+            foreach ($matchList as $k => $v){
+                $has = $modelPlayer -> getDataById($v['playerId']);
+                if($has == null)
+                    $modelPlayer -> insertData($v);
+                else
+                    $modelPlayer ->updateData($v);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取赛事历史数据
+     * @param $data
+     * @return array
+     */
+    public function getMatchNqHistory($data){
+        $dataJson = DI() -> redis -> getInfo('matchHistory_'.$data['fid']);
+        if($dataJson == null) {
+            $model = new Model_WeBzy();
+            $modelBind = new Model_WeNbaBind();
+            $modelHistory = new Model_WeNbaMatchHistory();
+            $has = $model->getById($data['fid']);
+            if ($has == null || $has['leagueId'] != 115)
+                return DI()->ResCode->get("WE.errorTypeMatch");
+            $awayId = $modelBind->getDataById($has['awayId']);
+            $homeId = $modelBind->getDataById($has['homeId']);
+            if (!isset($awayId['okooId']) || !isset($homeId['okooId']))
+                return DI()->ResCode->get("WE.errorTeamMatch");
+            $awayHistory = $modelHistory->getData($awayId['okooId']);
+            $homeHistory = $modelHistory->getData($homeId['okooId']);
+            $allHistory = $modelHistory->getTwoData($homeId['okooId'], $awayId['okooId']);
+
+            $dataList['homeTeamId'] = $homeId['okooId'];
+            $dataList['awayTeamId'] = $awayId['okooId'];
+            $dataList['awayHistory'] = $awayHistory;
+            $dataList['homeHistory'] = $homeHistory;
+            $dataList['allHistory'] = $allHistory;
+            $dataJson = json_encode($dataList);
+            DI()->redis->set_time('matchHistory_' . $data['fid'], $dataJson, 3600);
+        }else{
+            $dataList = json_decode($dataJson,true);
+        }
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $dataList;
+        return $ret;
+    }
+
+    /**
+     * 获取赛事队员数据
+     * @param $data
+     * @return array
+     */
+    public function getNbaMatchTeamList($data){
+        $dataJson = DI() -> redis -> getInfo('matchPlayer_'.$data['fid']);
+        if($dataJson == null){
+            $model = new Model_WeBzy();
+            $modelBind = new Model_WeNbaBind();
+            $modelPlayer = new Model_WeNbaMatchPlayer();
+            $has = $model ->getById($data['fid']);
+            if($has == null || $has['leagueId'] != 115)
+                return DI()->ResCode->get("WE.errorTypeMatch");
+            $awayId = $modelBind -> getDataById($has['awayId']);
+            $homeId = $modelBind -> getDataById($has['homeId']);
+            if(!isset($awayId['okooId']) || !isset($homeId['okooId']))
+                return DI()->ResCode->get("WE.errorTeamMatch");
+            $awayPlayer = $modelPlayer -> getData($awayId['okooId']);
+            $homePlayer = $modelPlayer -> getData($homeId['okooId']);
+            if($awayPlayer == [])
+                $awayPlayer = null;
+            if($homePlayer == [])
+                $homePlayer = null;
+            $dataList['awayPlayer'] = $awayPlayer;
+            $dataList['homePlayer'] = $homePlayer;
+            $dataJson = json_encode($dataList);
+            DI() -> redis -> set_time('matchPlayer_'.$data['fid'],$dataJson,3600);
+        }else
+            $dataList = json_decode($dataJson,true);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $dataList;
+        return $ret;
+    }
+
+    /**
+     * 获取足球赛事历史数据
+     * @param $data
+     * @return array
+     */
+    public function MatchZqHistory($data){
+
+        $dataJson = DI() -> redis -> getInfo('matchHistory_'.$data['fid']);
+        if($dataJson == null){
+            $model = new Model_WeBzy();
+            $has = $model ->getById($data['fid']);
+            if($has == null || $has['leagueType'] != 1)
+                return DI()->ResCode->get("WE.errorTypeMatch");
+            $url = "http://cms.8win.com/jz/matchInfo/historyRecord";
+            $postData = [
+                'againstNo' => $has['matchNum'],
+                'homeTeamName' => $has['homeName'],
+                'awayTeamName' => $has['awayName'],
+                'limit' => 20,
+                'flag' => 0,
+                'leagueFlag' => 0,
+                'leagueName' => $has['leagueName'],
+            ];
+
+            $addList = DI()->bzy -> sendTwo($postData , $url);
+            $addList = json_decode($addList,true);
+            $postData = [
+                'againstNo' => $has['matchNum'],
+                'homeTeamName' => $has['homeName'],
+                'awayTeamName' => '',
+                'limit' => 20,
+                'flag' => 0,
+                'leagueFlag' => 0,
+                'leagueName' => $has['leagueName'],
+            ];
+            $homeList = DI()->bzy -> sendTwo($postData , $url);
+            $homeList = json_decode($homeList,true);
+            $postData = [
+                'againstNo' => $has['matchNum'],
+                'homeTeamName' => '',
+                'awayTeamName' => $has['awayName'],
+                'limit' => 20,
+                'flag' => 0,
+                'leagueFlag' => 0,
+                'leagueName' => $has['leagueName'],
+            ];
+            $awayList = DI()->bzy -> sendTwo($postData , $url);
+            $awayList = json_decode($awayList,true);
+
+            $dataList['homeName'] = $has['homeName'];
+            $dataList['awayName'] = $has['awayName'];
+            $dataList['awayHistory'] = isset($awayList['resultList'])?$awayList['resultList']:null;
+            $dataList['homeHistory'] = isset($homeList['resultList'])?$homeList['resultList']:null;
+            $dataList['allHistory'] = isset($addList['resultList'])?$addList['resultList']:null;
+            $dataJson = json_encode($dataList);
+            DI() -> redis -> set_time('matchHistory_'.$data['fid'],$dataJson,3600);
+        }else
+            $dataList = json_decode($dataJson,true);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $dataList;
+        return $ret;
+    }
+
+    /**
+     * 获取足球赛事队员数据
+     * @param $data
+     * @return array
+     */
+    public function MatchZqPlayer($data){
+        $dataJson = DI() -> redis -> getInfo('matchPlayer_'.$data['fid']);
+
+        if($dataJson == null){
+            $model = new Model_WeBzy();
+            $has = $model ->getById($data['fid']);
+            if($has == null || $has['leagueType'] != 1)
+                return DI()->ResCode->get("WE.errorTypeMatch");
+            $dataList = DI()->matchPs -> getZqPlayerList($has['matchNum']);
+            $dataJson = json_encode($dataList);
+            DI() -> redis -> set_time('matchPlayer_'.$data['fid'],$dataJson,3600);
+        }else
+            $dataList = json_decode($dataJson,false);
+        $ret = DI()->ResCode->get("WE.Success");
+        print_r($dataList);exit;
+        $ret['data'] = $dataList;
+        return $ret;
+    }
+
+    /**
+     * 获取直播流模拟
+     * @return array
+     */
+    public function getLiveStreamList(){
+        $model = new Model_WeLiveStream();
+        $info = $model -> getList();
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 绑定直播流
+     * @param $data
+     * @return array
+     */
+    public function makeLiveStreamBind($data){
+        $modelBzy = new Model_WeBzy();
+        $has = $modelBzy -> getById($data['fid']);
+        if($has == null)
+            return DI()->ResCode->get("WE.noMatch");
+        $model = new Model_WeLiveStreamBind();
+        $info = $model -> insertInfo($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+//        $liveId = $info->insert_id();
+        if(isset($liveId) && $liveId > 0){
+            $has['liveName'] = $data['liveName'];
+//            $has['liveId'] = $liveId;
+//            print_r($has);exit;
+            $modelBzy -> updateBzy($has);
+        }
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+
+        return $ret;
+    }
+
+    /**
+     * 删除直播流
+     * @param $data
+     * @return array
+     */
+    public function deleteLiveStreamBind($data){
+        $model = new Model_WeLiveStreamBind();
+        $info = $model -> deleteInfo($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 获取直播流列表
+     * @param $data
+     * @return array
+     */
+    public function getLiveStreamBind($data){
+        $model = new Model_WeLiveStreamBind();
+        $info = $model -> getByFid($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 结束过期的比赛
+     * @return array
+     */
+    public function EndMatch(){
+        $model = new Model_WeBzy();
+        $model -> endMatch();
+        $ret = DI()->ResCode->get("WE.Success");
+        return $ret;
+    }
+
+}

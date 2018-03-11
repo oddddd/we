@@ -1,0 +1,60 @@
+<?php
+/**
+ * WeTask.php
+ */
+class Domain_WeTask
+{
+    /**
+     * 用户签到
+     * @return array res
+     * @desc wjp 2018-2-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function SignIn(){
+        $model = new Model_WeSingIn();
+        $moneyModel = new Model_WeUserWallet();
+        $configModel = new Model_WeConfig();
+        $domain = new Domain_WeMoney();
+        $userId = DI()->user['id'];
+        $date = date("Y-m-d");
+        $hasSignIn = $model -> getInfoByUserId($userId,$date);
+        if($hasSignIn != null)
+            return DI()->ResCode->get("WE.HasSignIn");
+        $beforeDate = date("Y-m-d",strtotime("-1 day"));
+        $hasBefore = $model -> getInfoByUserId($userId,$beforeDate);
+        $wallet = $domain ->getUserWallet(['userId' => $userId,'walletId' => 2]);
+        $list = $configModel -> getConfigListByType(DI()->config->get('admin.taskConfig.SignIn'));
+        $cMoney = 0;
+        $configList = [];
+        foreach ($list as $item) {
+           $configList[$item['configName']] = $item['configData'];
+        }
+        if($hasBefore == null){
+            if(isset($configList[1]))
+                $cMoney = intval($configList[1]);
+            $allParams = [
+                'userId' => $userId,
+                'useType' => 8,
+                'cMoney' => $cMoney,
+                'walletId' => 2,
+                'note' => $date.' 签到'
+            ];
+            $moneyModel -> updateInfo($wallet,$allParams);
+        }else{
+            if(isset($configList[$hasBefore['nextDay']]))
+                $cMoney = isset($configList[$hasBefore['nextDay']+1])?
+                intval($configList[$hasBefore['nextDay']+1]):intval($configList[$hasBefore['nextDay']]);
+            $allParams = [
+                'userId' => $userId,
+                'useType' => 8,
+                'cMoney' => $cMoney,
+                'walletId' => 2,
+                'note' => $date.' 签到'
+            ];
+            $moneyModel -> updateInfo($wallet,$allParams);
+        }
+        $ret = DI()->ResCode->get("WE.HasSignIn");
+        return $ret;
+    }
+
+}

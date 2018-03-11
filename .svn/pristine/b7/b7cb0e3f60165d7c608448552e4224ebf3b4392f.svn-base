@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * 钱包开放接口
+ */
+class Api_WeTask extends PhalApi_Api
+{
+    public function getRules()
+    {
+        return array(
+            'SignIn' => [
+            ],
+            'GetChest' => [
+            ],
+        );
+    }
+
+    /**
+     * 用户每日签到
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2018-02-08
+     */
+    public function SignIn(){
+        $domain = new Domain_WeTask();
+        $ret = $domain -> SignIn();
+        return $ret;
+    }
+    /**
+     * 用户宝箱领取
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2018-02-08
+     */
+    public function GetChest(){
+        $domain = new Domain_WeTask();
+        $ret = $domain -> GetChest();
+        return $ret;
+    }
+}

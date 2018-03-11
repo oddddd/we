@@ -1,0 +1,682 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: dddd
+ * Date: 2017/12/29
+ * Time: 下午2:32
+ */
+class Api_BackConsult extends PhalApi_Api
+{
+    public function getRules()
+    {
+        return array(
+            'GainNewConsultList' => [
+            ],
+            'AuthorList' => [
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+            ],
+            'insertConsultAuthor' => [
+                'consultAuthorName' => ['name' => 'consultAuthorName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '作者姓名'],
+                'bindUser' => ['name' => 'bindUser', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => '预留'],
+            ],
+            'deleteConsultAuthor' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '作者id'],
+            ],
+            'updateConsultAuthor' => [
+                'consultAuthorName' => ['name' => 'consultAuthorName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '作者姓名'],
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '作者id'],
+            ],
+            'updateConsult' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '咨询id'],
+                'consultName' => ['name' => 'consultName', 'type' => 'string', 'min' => 1,'max' => 50, 'require' => false, 'desc' => '咨询名称'],
+                'consultImg' => ['name' => 'consultImg', 'type' => 'string',  'min' => 1,'max' => 150,'require' => false, 'desc' => '咨询图片链接'],
+                'video' => ['name' => 'video', 'type' => 'string',  'min' => 1,'max' => 150,'require' => false, 'desc' => '视频链接'],
+                'consultDetail' => ['name' => 'consultDetail', 'type' => 'string','require' => false, 'desc' => '咨询内容'],
+                'top' => ['name' => 'top', 'type' => 'int','require' => false, 'desc' => '置顶顺序 默认1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => false, 'desc' => '分类id'],
+                'authorId' => ['name' => 'authorId', 'type' => 'int', 'require' => false, 'desc' => '作者id'],
+                'recommendId' => ['name' => 'recommendId', 'type' => 'int','min' => 1,'max' => 20, 'require' => false, 'desc' => '推荐模板id'],
+                'status'=>['name'=>'status','type'=>'int', 'require' => false,'desc'=>'是删除 0 删除 不删不要传'],
+                'hot'=>['name'=>'hot','type'=>'int', 'require' => false,'desc'=>'是否热门 0不是 1是']
+            ],
+            'insertConsult' => [
+                'consultName' => ['name' => 'consultName', 'type' => 'string', 'min' => 1,'max' => 50, 'require' => true, 'desc' => '咨询名称'],
+                'consultImg' => ['name' => 'consultImg', 'type' => 'string',  'min' => 1,'max' => 150,'require' => true, 'desc' => '咨询图片链接'],
+                'video' => ['name' => 'video', 'type' => 'string',  'min' => 1,'max' => 150,'require' => false, 'desc' => '视频链接'],
+                'consultDetail' => ['name' => 'consultDetail', 'type' => 'string','require' => true, 'desc' => '咨询内容'],
+                'top' => ['name' => 'top', 'type' => 'int','require' => true, 'desc' => '置顶顺序 默认1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => true, 'desc' => '分类id'],
+                'authorId' => ['name' => 'authorId', 'type' => 'int', 'require' => true, 'desc' => '作者id'],
+                'recommendId' => ['name' => 'recommendId', 'type' => 'int','min' => 1,'max' => 20, 'require' => false, 'desc' => '推荐模板id'],
+                'hot'=>['name'=>'hot','type'=>'int', 'require' => false,'desc'=>'是否热门 0不是 1是']
+            ],
+            'RecommendList' => [
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+            ],
+            'insertRecommend' => [
+                'recommendName' => ['name' => 'recommendName', 'type' => 'string', 'min' => 1,'max' => 50,'require' => false, 'desc' => '模板名称'],
+                'id1' => ['name' => 'id1', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '文章id 1号'],
+                'type1' => ['name' => 'type1', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => 'type 1咨询 2视频 3网页 4快讯 5比赛'],
+                'id2' => ['name' => 'id2', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '文章id'],
+                'type2' => ['name' => 'type2', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => 'type 1咨询 2视频 3网页 4快讯 5比赛'],
+                'id3' => ['name' => 'id3', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '文章id'],
+                'type3' => ['name' => 'type3', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => 'type 1咨询 2视频 3网页 4快讯 5比赛'],
+            ],
+            'deleteRecommend' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '模板id'],
+            ],
+            'updateRecommend' => [
+                'recommendName' => ['name' => 'recommendName', 'type' => 'string', 'min' => 1,'max' => 50,'require' => false, 'desc' => '模板名称'],
+                'id' => ['name' => 'id', 'min' => 1,'max' => 20,'type' => 'int', 'require' => true, 'desc' => '模板id'],
+                'id1' => ['name' => 'id1', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '文章id 1号'],
+                'type1' => ['name' => 'type1', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => '类型 1咨询 2 视频 3 网页 4快讯 5比赛'],
+                'id2' => ['name' => 'id2', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '文章id'],
+                'type2' => ['name' => 'type2', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => '类型 1咨询 2 视频 3 网页 4快讯 5比赛'],
+                'id3' => ['name' => 'id3', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '文章id'],
+                'type4' => ['name' => 'type3', 'type' => 'string', 'min' => 1,'max' => 20,'require' => false, 'desc' => '类型 1咨询 2 视频 3 网页 4快讯 5比赛'],
+            ],
+
+            'updateNewConsult' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '咨询id'],
+                'consultName' => ['name' => 'consultName', 'type' => 'string', 'min' => 1,'max' => 50, 'require' => false, 'desc' => '咨询名称'],
+                'consultImg' => ['name' => 'consultImg', 'type' => 'string',  'min' => 0,'max' => 150,'require' => false, 'desc' => '咨询图片链接'],
+                'consultBrief' => ['name' => 'consultBrief', 'type' => 'string',  'min' => 1,'max' => 150,'require' => false, 'desc' => '咨询简介'],
+                'consultDetail' => ['name' => 'consultDetail', 'type' => 'string','require' => false, 'desc' => '咨询内容'],
+                'top' => ['name' => 'top', 'type' => 'int','require' => false, 'desc' => '置顶顺序 默认1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => false, 'desc' => '分类id'],
+                'authorId' => ['name' => 'authorId', 'type' => 'int', 'require' => false, 'desc' => '作者id'],
+                'recommendId' => ['name' => 'recommendId', 'type' => 'int','min' => 1,'max' => 20, 'require' => false, 'desc' => '推荐模板id'],
+                'status'=>['name'=>'status','type'=>'int', 'require' => false,'desc'=>'是删除 0 删除 不删不要传'],
+                'hot'=>['name'=>'hot','type'=>'int', 'require' => false,'desc'=>'是否热门 0不是 1是']
+            ],
+
+            'insertNewConsult' => [
+                'consultName' => ['name' => 'consultName', 'type' => 'string', 'min' => 1,'max' => 50, 'require' => true, 'desc' => '咨询名称'],
+                'consultImg' => ['name' => 'consultImg', 'type' => 'string',  'min' => 0,'max' => 150,'require' => false, 'desc' => '咨询图片链接'],
+                'consultBrief' => ['name' => 'consultBrief', 'type' => 'string',  'min' => 1,'max' => 200,'require' => true, 'desc' => '咨询简介'],
+                'consultDetail' => ['name' => 'consultDetail', 'type' => 'string','require' => true, 'desc' => '咨询内容'],
+                'top' => ['name' => 'top', 'type' => 'int','require' => true, 'desc' => '置顶顺序 默认1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => true, 'desc' => '分类id'],
+                'authorId' => ['name' => 'authorId', 'type' => 'int', 'require' => true, 'desc' => '作者id'],
+                'recommendId' => ['name' => 'recommendId', 'type' => 'int','min' => 1,'max' => 20, 'require' => false, 'desc' => '推荐模板id'],
+                'hot'=>['name'=>'hot','type'=>'int', 'require' => false,'desc'=>'是否热门 0不是 1是']
+            ],
+            'updateVideoConsult' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '咨询id'],
+                'consultName' => ['name' => 'consultName', 'type' => 'string', 'min' => 1,'max' => 50, 'require' => false, 'desc' => '咨询名称'],
+                'consultImg' => ['name' => 'consultImg', 'type' => 'string',  'min' => 0,'max' => 150,'require' => false, 'desc' => '咨询图片链接'],
+                'video' => ['name' => 'video', 'type' => 'string',  'min' => 0,'max' => 150,'require' => false, 'desc' => '视频链接'],
+                'consultDetail' => ['name' => 'consultDetail', 'type' => 'string','require' => false, 'desc' => '咨询内容'],
+                'team' => ['name' => 'team', 'type' => 'string','require' => false, 'desc' => '队伍json [{"team":"1","point":"78"},{"team":"1","point":"78"}]'],
+                'leagueId' => ['name' => 'leagueId', 'type' => 'int','require' => false, 'desc' => '联赛id'],
+                'top' => ['name' => 'top', 'type' => 'int','require' => false, 'desc' => '置顶顺序 默认1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => false, 'desc' => '分类id'],
+                'authorId' => ['name' => 'authorId', 'type' => 'int', 'require' => false, 'desc' => '作者id'],
+                'recommendId' => ['name' => 'recommendId', 'type' => 'int','min' => 1,'max' => 20, 'require' => false, 'desc' => '推荐模板id'],
+                'status'=>['name'=>'status','type'=>'int', 'require' => false,'desc'=>'删除 0 删除 不删不要传'],
+                'hot'=>['name'=>'hot','type'=>'int', 'require' => false,'desc'=>'是否热门 0不是 1是']
+            ],
+
+            'insertVideoConsult' => [
+                'consultName' => ['name' => 'consultName', 'type' => 'string', 'min' => 1,'max' => 50, 'require' => true, 'desc' => '咨询名称'],
+                'consultImg' => ['name' => 'consultImg', 'type' => 'string',  'min' => 0,'max' => 150,'require' => true, 'desc' => '咨询图片链接'],
+                'video' => ['name' => 'video', 'type' => 'string',  'min' => 0,'max' => 150,'require' => true, 'desc' => '视频链接'],
+                'consultDetail' => ['name' => 'consultDetail', 'type' => 'string','require' => false, 'desc' => '咨询内容'],
+                'team' => ['name' => 'team', 'type' => 'string', 'require' => false, 'desc' => '队伍json [{"team":"1","point":"78"},{"team":"1","point":"78"}]'],
+                'leagueId' => ['name' => 'leagueId', 'type' => 'int','require' => false, 'desc' => '联赛id'],
+                'top' => ['name' => 'top', 'type' => 'int','require' => true, 'desc' => '置顶顺序 默认1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => true, 'desc' => '分类id'],
+                'authorId' => ['name' => 'authorId', 'type' => 'int', 'require' => true, 'desc' => '作者id'],
+                'recommendId' => ['name' => 'recommendId', 'type' => 'int','min' => 1,'max' => 20, 'require' => false, 'desc' => '推荐模板id'],
+                'hot'=>['name'=>'hot','type'=>'int', 'require' => false,'desc'=>'是否热门 0不是 1是']
+            ],
+            'leagueList' => [
+            ],
+            'leagueUpdateData' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '要修改的id'],
+                'leagueName' => ['name' => 'leagueName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => false, 'desc' => '联赛名字'],
+                'leagueImg' => ['name' => 'leagueImg', 'type' => 'string', 'min' => 1,'max' => 100,'require' => false, 'desc' => '联赛logoUrl'],
+                'status' => ['name' => 'status','type' => 'int', 'require' => false, 'desc' => '要删除 传 0'],
+            ],
+            'leagueInsertData' => [
+                'leagueName' => ['name' => 'leagueName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '联赛名字'],
+                'leagueImg' => ['name' => 'leagueImg', 'type' => 'string', 'min' => 1,'max' => 100,'require' => false, 'desc' => '联赛logoUrl'],
+            ],
+            'teamList' => [
+                'pid' => ['name' => 'pid','type' => 'int', 'require' => true, 'desc' => '所属联赛'],
+            ],
+            'teamUpdateData' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '要修改的id'],
+                'teamName' => ['name' => 'teamName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => false, 'desc' => '联赛名字'],
+                'teamImg' => ['name' => 'teamImg', 'type' => 'string', 'min' => 1,'max' => 100,'require' => false, 'desc' => '联赛logoUrl'],
+                'pid' => ['name' => 'pid','type' => 'int', 'require' => true, 'desc' => '所属联赛'],
+                'status' => ['name' => 'status','type' => 'int', 'require' => false, 'desc' => '要删除 传 0'],
+            ],
+            'teamInsertData' => [
+                'teamName' => ['name' => 'teamName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '联赛名字'],
+                'teamImg' => ['name' => 'teamImg', 'type' => 'string', 'min' => 1,'max' => 100,'require' => false, 'desc' => '联赛logoUrl'],
+                'pid' => ['name' => 'pid','type' => 'int', 'require' => true, 'desc' => '所属联赛'],
+            ],
+            'insertConsultClass' => [
+                'consultClassName' => ['name' => 'consultClassName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => true, 'desc' => '分类名称'],
+                'top'=>['name'=>'top','type'=>'int', 'require' => false,'desc'=>'排序越大越在前面 1到 10'],
+                'type' => ['name' => 'type', 'type' => 'string', 'min' => 1,'max' => 20,'require' => true, 'desc' => 'type 1咨询 2视频 3快讯'],
+            ],
+            'updateConsultClass' => [
+                'id' => ['name' => 'id','type' => 'int', 'require' => true, 'desc' => '要修改的id'],
+                'consultClassName' => ['name' => 'consultClassName', 'min' => 1,'max' => 20,'type' => 'string', 'require' => false, 'desc' => '分类名称'],
+                'top'=>['name'=>'top','type'=>'int', 'require' => false,'desc'=>'排序越大越在前面 1到 10'],
+                'status'=>['name'=>'status','type'=>'int', 'require' => false,'desc'=>'删除 0 删除 不删不要传'],
+                'type' => ['name' => 'type', 'type' => 'string', 'min' => 1,'max' => 20,'require' => true, 'desc' => 'type 1咨询 2视频 3快讯'],
+            ],
+            'BannerList' => [
+            ],
+            'ConsultClassList'=>[
+            ],
+            'ConsultList'=>[
+                'find' => ['name' => 'find', 'type' => 'string', 'require' => false,'desc' => '条件搜索'],
+                'startTime' =>['name' => 'startTime', 'type' => 'string','require' => false,'desc' => '开始时间'],
+                'endTime' =>['name' => 'endTime', 'type' => 'string','require' => false,'desc' => '结束时间'],
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => false,'desc' => '分类id'],
+            ],
+            'NewConsultClassList'=>[
+            ],
+            'NewConsultList'=>[
+                'find' => ['name' => 'find', 'type' => 'string', 'require' => false,'desc' => '条件搜索'],
+                'startTime' =>['name' => 'startTime', 'type' => 'string','require' => false,'desc' => '开始时间'],
+                'endTime' =>['name' => 'endTime', 'type' => 'string','require' => false,'desc' => '结束时间'],
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => false,'desc' => '分类id'],
+            ],
+            'VideoConsultClassList'=>[
+            ],
+            'VideoConsultList'=>[
+                'find' => ['name' => 'find', 'type' => 'string', 'require' => false,'desc' => '条件搜索'],
+                'startTime' =>['name' => 'startTime', 'type' => 'string','require' => false,'desc' => '开始时间'],
+                'endTime' =>['name' => 'endTime', 'type' => 'string','require' => false,'desc' => '结束时间'],
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+                'classId' => ['name' => 'classId', 'type' => 'int', 'require' => false,'desc' => '分类id'],
+            ],
+            'CommentList'=>[
+                'page' => ['name' => 'page', 'type' => 'int', 'require' => true,'desc' => '页码第一页传1'],
+                'type' => ['name' => 'type', 'type' => 'int', 'require' => true,'desc' => '评论类型 1咨询 2视频 3快讯'],
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true,'desc' => '帖子id'],
+            ],
+            'CommentDelete'=>[
+                'id' => ['name' => 'id', 'type' => 'int', 'require' => true,'desc' => '评论id'],
+            ],
+            'insertComment' => [
+                'fid' => ['name' => 'fid', 'type' => 'int', 'require' => true,'desc' => '帖子或视频或快讯id'],
+                'userId' => ['name' => 'fid', 'type' => 'int', 'require' => true,'desc' => '主持人id'],
+                'type' => ['name' => 'type', 'type' => 'int', 'require' => true,'desc' => '咨询类型 1咨询 2视频 3快讯'],
+                'comment' => ['name' => 'comment', 'type' => 'string', 'require' => true, 'min' => 1,'max' => 200, 'desc' => '评论内容'],
+            ],
+
+        );
+    }
+
+    /**
+     * 更新赛事
+     * @desc wjp 2018-1-12
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function GainNewConsultList(){
+        $domain = new Domain_WeConsult();
+        $domain -> GainNewConsultList();
+        $ret = DI()->ResCode->get("WE.Success");
+        return $ret;
+    }
+
+    /**
+     * 作者列表
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function AuthorList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> AuthorList($allParams);
+        return $userInfo;
+    }
+    /**
+     * 新建咨询作者
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertConsultAuthor(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> insertConsultAuthor($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $userInfo;
+        return $userInfo;
+    }
+
+    /**
+     * 删除咨询作者
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteConsultAuthor(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> deleteConsultAuthor($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $userInfo;
+        return $userInfo;
+    }
+
+    /**
+     * 修改咨询作者
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateConsultAuthor(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> updateConsultAuthor($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $userInfo;
+        return $userInfo;
+    }
+
+    /**
+     * 推荐模板列表
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function RecommendList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> RecommendList($allParams);
+
+        return $userInfo;
+    }
+
+    /**
+     * 新建推荐模板
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertRecommend(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> insertRecommend($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $userInfo;
+        return $userInfo;
+    }
+
+    /**
+     * 删除推荐模板
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteRecommend(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> deleteRecommend($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $userInfo;
+        return $userInfo;
+    }
+
+    /**
+     * 推荐模板修改
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateRecommend(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> updateRecommend($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $userInfo;
+        return $ret;
+    }
+
+    /**
+     * 咨询修改
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateConsult(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> updateConsult($allParams);
+        return $userInfo;
+    }
+
+    /**
+     * 新建咨询
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertConsult(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $userInfo = $domain -> insertConsult($allParams);
+        return $userInfo;
+    }
+    /**
+     * 新建快讯
+     * @desc wjp 2017-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertNewConsult(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeNewConsult();
+        $userInfo = $domain -> insertNewConsult($allParams);
+        return $userInfo;
+    }
+
+    /**
+     * 修改快讯
+     * @desc wjp 2017-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateNewConsult(){
+        $allParams = $this -> allParams();
+//        print_r($allParams);exit;
+        $domain = new Domain_WeNewConsult();
+        $userInfo = $domain -> updateNewConsult($allParams);
+        return $userInfo;
+    }
+
+    /**
+     * 新建视频
+     * @desc wjp 2017-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertVideoConsult(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeVideoConsult();
+        $userInfo = $domain -> insertVideoConsult($allParams);
+        return $userInfo;
+    }
+
+    /**
+     * 修改视频
+     * @desc wjp 2017-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateVideoConsult(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeVideoConsult();
+        $userInfo = $domain -> updateVideoConsult($allParams);
+        return $userInfo;
+    }
+
+    /**
+     * 获取赛事列表
+     * @desc wjp 2018-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function leagueList()
+    {
+        $model = new Domain_WeVideoConsult();
+        $info = $model->leagueList();
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 修改赛事
+     * @desc wjp 2018-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function leagueUpdateData()
+    {
+        $allParams = $this -> allParams();
+        $model = new Domain_WeVideoConsult();
+        $info = $model->leagueUpdateData($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 添加赛事
+     * @desc wjp 2018-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function leagueInsertData()
+    {
+        $allParams = $this -> allParams();
+        $model = new Domain_WeVideoConsult();
+        $info = $model->leagueInsertData($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 获取队伍列表
+     * @desc wjp 2018-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function teamList()
+    {
+        $allParams = $this -> allParams();
+        $model = new Domain_WeVideoConsult();
+        $info = $model->teamList($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 修改队伍
+     * @desc wjp 2018-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function teamUpdateData()
+    {
+        $allParams = $this -> allParams();
+        $model = new Domain_WeVideoConsult();
+        $info = $model->teamUpdateData($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 添加队伍
+     * @desc wjp 2018-1-8
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function teamInsertData()
+    {
+        $allParams = $this -> allParams();
+        $model = new Domain_WeVideoConsult();
+        $info = $model->teamInsertData($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 添加分类
+     * @desc wjp 2018-1-8
+     * @return mixed
+     */
+    public function insertConsultClass(){
+        $allParams = $this -> allParams();
+        $model = new Domain_WeConsult();
+        $info = $model->insertConsultClass($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 修改分类
+     * @desc wjp 2018-1-8
+     * @return mixed
+     */
+    public function updateConsultClass(){
+        $allParams = $this -> allParams();
+        $model = new Domain_WeConsult();
+        $info = $model->updateConsultClass($allParams);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 轮换板
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 轮换板列表
+     * @desc wjp 2017-12-26
+     */
+    public function BannerList(){
+        $domain = new Domain_WeBanner();
+        $bannerList = $domain->bannerList();
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $bannerList;
+        return $res;
+    }
+
+    /**
+     * 帖子分类列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 分类列表
+     * @desc wjp 2017-12-28
+     */
+    public function ConsultClassList(){
+        $domain = new Domain_WeConsult();
+        $list = $domain->BackConsultClassList();
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 帖子列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function ConsultList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $ret = $domain->BackConsultList($allParams);
+        return $ret;
+    }
+    /**
+     * 快讯分类列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 分类列表
+     * @desc wjp 2017-1-8
+     */
+    public function NewConsultClassList(){
+        $domain = new Domain_WeNewConsult();
+        $list = $domain->NewConsultClassList();
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 快讯列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function NewConsultList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeNewConsult();
+        $list = $domain->BackConsultList($allParams);
+        return $list;
+    }
+
+    /**
+     * 视频分类列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 分类列表
+     * @desc wjp 2017-1-8
+     */
+    public function VideoConsultClassList(){
+        $domain = new Domain_WeVideoConsult();
+        $list = $domain->videoConsultClassList();
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 视频列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function VideoConsultList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeVideoConsult();
+        $list = $domain->BackConsultList($allParams);
+        return $list;
+    }
+
+    /**
+     * 评论列表
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function CommentList(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $list = $domain->BackCommentList($allParams);
+        return $list;
+    }
+
+    /**
+     * 删除评论
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data 列表
+     * @desc wjp 2017-12-28
+     */
+    public function CommentDelete(){
+        $allParams = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $list = $domain->BackDeleteComment($allParams);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $list;
+        return $res;
+    }
+
+    /**
+     * 发送评论
+     * @return int code 1操作成功
+     * @return string context 问题详细描述
+     * @return array data url
+     * @desc wjp 2017-12-25
+     */
+    public function insertComment(){
+        $data = $this -> allParams();
+        $domain = new Domain_WeConsult();
+        $model = new Model_WeUser();
+        $has = $model ->getUserId($data['userId']);
+        if($has == null)
+            return DI()->ResCode->get("WE.LoginError1");
+        $rolerCode = DI()->Ruler->Roler($data['comment']);
+
+        if($rolerCode == -100)
+            return DI()->ResCode->get("WE.rulerError");
+        $data['pid'] = 0;
+        $domain -> insertComment($data);
+        return DI()->ResCode->get("WE.Success");
+    }
+
+}

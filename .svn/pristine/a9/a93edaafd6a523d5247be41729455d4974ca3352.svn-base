@@ -1,0 +1,158 @@
+<?php
+
+/**
+ * WeComment.php
+ *
+ * @author: wjp 2017-1-1
+ */
+class Model_WeComment extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'comment';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+//        self::$mtoken = DI()->config->get('app.Pay.token');
+    }
+
+    /**
+     * 获取评论列表
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getCommentList($allParams)
+    {
+        try {
+            $page = $allParams['page'];
+            $page = $page - 1;
+            if($page < 0)
+                return null;
+            $limitEnd = DI()->config->get("app.page.def");
+            $limitStart = $limitEnd*$page;
+            $userId = isset(DI()->user['id'])?DI()->user['id']:0;
+            $sql = "select a.*,b.nickName,b.photo
+,(select count(*) as likeNum from we_commentLike where fid = a.id ) as likeNum
+,(select count(*) as haslike from we_commentLike where fid = a.id && userId = {$userId}) as haslike
+from we_comment as a left JOIN we_user as b ON a.userId = b.id
+where a.status = 1 && a.fid = {$allParams['fid']} && a.type =  {$allParams['type']} 
+ORDER BY a.updateTime desc 
+Limit {$limitStart},{$limitEnd}";
+            echo $sql;exit;
+            $commentList = $this->getORM()->queryAll($sql);
+            return $commentList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取评论列表
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getBackCommentList($find)
+    {
+        try {
+            $sql = "select a.*,b.nickName,b.photo
+,(select count(*) as likeNum from we_commentLike where fid = a.id ) as likeNum
+from we_comment as a left JOIN we_user as b ON a.userId = b.id
+where a.status = 1 {$find}";
+            $commentList = $this->getORM()->queryAll($sql);
+            return $commentList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取评论列表
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getBackCommentPage($find)
+    {
+        try {
+            $sql = "select count(*)
+from we_comment as a left JOIN we_user as b ON a.userId = b.id
+where a.status = 1 {$find}";
+            $commentList = $this->getORM()->queryAll($sql);
+            return isset($commentList[0])?$commentList[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取评论
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getComment($id)
+    {
+        try {
+            $sql = "select * from we_comment where id = {$id}";
+            $comment = $this->getORM()->queryAll($sql);
+            return isset($comment[0])?$comment[0]:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入评论
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertComment($data)
+    {
+        try {
+            $ret = $this->getORM()->insert($data);
+            $this -> addLog($this->getORM()->insert_id());
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 删除评论
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteComment($id)
+    {
+        try {
+            $ret = $this->getORM()->where('id', $id)->update(['status'=>0]);
+            $this -> addLog($id);
+            return isset($ret)?$ret:null;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

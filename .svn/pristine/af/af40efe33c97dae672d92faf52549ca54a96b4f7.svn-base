@@ -1,0 +1,107 @@
+<?php
+
+/**
+ * ULog.php
+ *
+ * @author: wjp 2017-04-29
+ */
+class Model_ULog extends PhalApi_Model_NotORM
+{
+    /**
+     * 根据主键值返回对应的表名，注意分表的情况
+     */
+    protected function getTableName($id)
+    {
+        return 'u_log';
+    }
+
+    /**
+     * 重写getORM方法，方便下面使用
+     */
+    protected function getORM($id = NULL)
+    {
+        return parent::getORM($id == NULL ? 'we_base' : $id);
+    }
+
+
+    public function __construct()
+    {
+    }
+
+    /**
+     * 获取分页列表
+     * @desc wjp 2017-12-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getList($sql)
+    {
+        try {
+
+            $sql1 = "select a.*
+from u_log as a  {$sql}";
+            $classList = $this->getORM()->queryAll($sql1);
+            return $classList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 获取log翻页页码
+     * @param $sql
+     * @return null
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getPage($sql)
+    {
+        try {
+            $sql1 = "select count(a.*) as page
+from u_log as a {$sql}";
+            $classList = $this->getORM()->queryAll($sql1);
+            return $classList;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 插入数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertInfo($data)
+    {
+        try {
+            $sql = "insert into u_log(`uid`,`content`,`api`,`pid`) VALUE ('{$data['uid']}','{$data['content']}','{$data['type']}','{$data['pid']}')";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+
+    /**
+     * 删除数据
+     * @param array $data
+     * @desc wjp 2017-04-29
+     * @return array
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteUserInfo($data)
+    {
+        try {
+            $sql = "delete from u_log where id = {$data['id']} ";
+            $user_info = $this->getORM()->queryAll($sql);
+            return $user_info;
+        } catch (Exception $ex) {
+            DI()->logger->error('SQL_ERROR', ['trace' => __METHOD__, 'msg' => $ex->getMessage()]);
+            throw new PhalApi_Exception_InternalServerError(T('Request failed'));
+        }
+    }
+}

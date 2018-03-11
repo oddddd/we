@@ -1,0 +1,73 @@
+<?php
+/**
+ * WeTask.php
+ */
+class Domain_WeTask
+{
+    /**
+     * 用户签到
+     * @return array res
+     * @desc wjp 2018-2-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function SignIn(){
+
+        $model = new Model_WeSignIn();
+        $moneyModel = new Model_WeUserWallet();
+        $configModel = new Model_WeConfig();
+        $domain = new Domain_WeMoney();
+        $userModel = new Model_WeUser();
+        $userId = DI()->user['id'];
+        $date = date("Y-m-d");
+        $hasUser = $userModel -> getUserId($userId);
+
+        if(!isset($hasUser['phone']) || $hasUser['phone'] == null || $hasUser['phone'] == null)
+            return DI()->ResCode->get("WE.HasNoPhone");
+        $hasSignIn = $model -> getInfoByUserId($userId,$date);
+        if($hasSignIn != null)
+            return DI()->ResCode->get("WE.HasSignIn");
+        $beforeDate = date("Y-m-d",strtotime("-1 day"));
+
+        $hasBefore = $model -> getInfoByUserId($userId,$beforeDate);
+
+        $wallet = $domain ->getUserWallet(['userId' => $userId,'walletId' => 2]);
+
+        $list = $configModel -> getConfigListByType(DI()->config->get('admin.taskConfig.SignIn'));
+        print_r($list);exit;
+        $cMoney = 0;
+        $configList = [];
+        foreach ($list as $item) {
+           $configList[$item['configName']] = $item['configData'];
+        }
+
+        if($hasBefore == null){
+            if(isset($configList[1]))
+                $cMoney = intval($configList[1]);
+            $allParams = [
+                'userId' => $userId,
+                'useType' => 8,
+                'cMoney' => $cMoney,
+                'walletId' => 2,
+                'note' => $date.' 签到'
+            ];
+            $moneyModel -> updateInfo($wallet,$allParams);
+            $model ->insertInfo(['userId'=>$userId,'day'=>$date,'nextDay'=>1,'money'=>$cMoney,'walletId'=>2]);
+        }else{
+            if(isset($configList[$hasBefore['nextDay']]))
+                $cMoney = isset($configList[$hasBefore['nextDay']+1])?
+                intval($configList[$hasBefore['nextDay']+1]):intval($configList[$hasBefore['nextDay']]);
+            $allParams = [
+                'userId' => $userId,
+                'useType' => 8,
+                'cMoney' => $cMoney,
+                'walletId' => 2,
+                'note' => $date.' 签到'
+            ];
+            $moneyModel -> updateInfo($wallet,$allParams);
+            $model ->insertInfo(['userId'=>$userId,'day'=>$date,'nextDay'=>1,'money'=>$cMoney,'walletId'=>2]);
+        }
+        $ret = DI()->ResCode->get("WE.Success");
+        return $ret;
+    }
+
+}

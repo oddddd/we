@@ -1,0 +1,660 @@
+<?php
+/**
+ * WeConsult.php
+ */
+class Domain_WeConsult
+{
+    /**
+     * 快讯爬取数据NBA
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function GainNewConsultList(){
+//        $url = "https://voice.hupu.com/nba";
+        $newsModel = New Model_WeNewConsult();
+        $urlList = DI() -> matchPs -> GainNewConsultList();
+        if(count($urlList) < 1)
+            return null;
+        foreach($urlList as $k => $v){
+            $has = $newsModel -> getBackConsultByGainUrl($v);
+            if($has == null){
+                DI() -> matchPs -> GainNewConsultDetail($v);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取帖子列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function ConsultList($allParams){
+        $key = 'ConsultList_'.json_encode($allParams);
+        $bannerList = DI() -> redis -> getInfo($key);
+        if($bannerList == null || $bannerList == ''){
+            $model = new Model_WeConsult;
+            $info = $model -> getConsultList($allParams);
+            DI() -> redis -> set_InfoTime($key,json_encode($info),180);
+        }else{
+            $info = json_decode($bannerList,true);
+        }
+        return $info;
+    }
+
+    /**
+     * 获取帖子列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function BackConsultList($allParams){
+        $model = new Model_WeConsult;
+        $sql = "";
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        if(isset($allParams['classId']))
+            $sql .= " && a.classId = {$allParams['classId']}";
+        if(isset($allParams['find']))
+            $sql .= " && (a.id LIKE '%{$allParams['find']}%' || a.consultName LIKE '%{$allParams['find']}%' || a.consultDetail LIKE '%{$allParams['find']}%') ";
+        if(isset($allParams['startTime']))
+            $sql .= " && a.createTime > '{$allParams['startTime']}' ";
+        if(isset($allParams['endTime']))
+            $sql .= " && a.createTime < '{$allParams['endTime']}' ";
+        $allPage = $model -> getBackConsultPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER by a.top desc,a.updateTime desc 
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getBackConsultList($sql);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        $res['allPage'] = $allPage;
+        return $res;
+    }
+    /**
+     * 获取帖子列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function ConsultDetail($allParams){
+        $info = null;
+        if($allParams['type'] == 1){
+            $model = new Model_WeConsult;
+            $model -> consultNumAdd($allParams['id']);
+            $info = $model -> getConsultDetail($allParams['id']);
+        }
+        if($allParams['type'] == 2){
+            $model = new Model_WeVideoConsult();
+            $model -> consultNumAdd($allParams['id']);
+            $info = $model -> getConsultDetail($allParams['id']);
+        }
+        if($allParams['type'] == 3){
+            $model = new Model_WeNewConsult;
+            $model -> consultNumAdd($allParams['id']);
+            $info = $model -> getConsultDetail($allParams['id']);
+        }
+        if(isset($info['recommendId']) && $info['recommendId'] && $info['recommendId'] != 0){
+            $info['recommendList'] = $this -> getRecommend($info['recommendId']);
+        }
+        if(isset($info['team'])){
+            $modelTeam = new Model_WeTeam();
+            $timeList = [];
+            $teamArray = json_decode($info['team'],true);
+            if(isset($teamArray[0]['team'])&&isset($teamArray[0]['point'])){
+                foreach($teamArray as $key => $v){
+                    $team = $modelTeam -> getOneById($v['team']);
+                    $team['point'] = $v['point'];
+                    $timeList[] = $team;
+                }
+            }
+            $info['team'] = $timeList;
+        }
+        return $info;
+    }
+
+    /**
+     * 插入分类
+     * @param $data
+     * @return long|null
+     */
+    public function insertConsultClass($data){
+        $modelConsult = null;
+        if($data['type'] == 1)
+            $modelConsult = new Model_WeConsultClass();
+        if($data['type'] == 2)
+            $modelConsult = new Model_WeVideoConsultClass();
+        if($data['type'] == 3)
+            $modelConsult = new Model_WeNewConsultClass();
+        if($modelConsult == null)
+            return null;
+        unset($data['type']);
+        $info = $modelConsult -> insert($data);
+        return $info;
+    }
+
+
+    /**
+     * 修改分类
+     * @param $data
+     * @return array
+     */
+    public function updateConsultClass($data){
+        $modelConsult = null;
+        if($data['type'] == 1)
+            $modelConsult = new Model_WeConsultClass();
+        if($data['type'] == 2)
+            $modelConsult = new Model_WeVideoConsultClass();
+        if($data['type'] == 3)
+            $modelConsult = new Model_WeNewConsultClass();
+        if($modelConsult == null)
+            return null;
+        unset($data['type']);
+        $info = $modelConsult -> updateConsultClass($data);
+//        print_r($data);exit;
+        return $info;
+    }
+
+
+    /**
+     * 获取帖子分类列表
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function ConsultClassList(){
+        $model = new Model_WeConsultClass;
+        if(isset(DI() ->user['id'])){
+            $modelBind = new Model_WeConsultClassBind();
+            $bindClass = $modelBind ->getConsultClassBind(DI() ->user['id']);
+            if($bindClass!=null && $bindClass!=[] && $bindClass['consultClassId'] != '' ){
+                $info = $model -> getConsultClassListById($bindClass['consultClassId']);
+                return $info;
+            }
+        }
+        $info = $model -> getConsultClassList();
+        return $info;
+    }
+
+    /**
+     * 获取帖子分类列表
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function BackConsultClassList(){
+        $model = new Model_WeConsultClass;
+        $info = $model -> getConsultClassList();
+        return $info;
+    }
+
+    /**
+     * 获取用户帖子分类选择页面数据
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function userConsultClassList(){
+        $model = new Model_WeConsultClass;
+        $modelBind = new Model_WeConsultClassBind();
+        if(isset(DI() ->user['id']))
+            $bindClass = $modelBind ->getConsultClassBind(DI() ->user['id']);
+        if(isset($bindClass) && $bindClass!=null && $bindClass!=[] && $bindClass['consultClassId'] != ''){
+            $hasClass = $model -> getConsultClassListById($bindClass['consultClassId']);
+            $info = $model -> getConsultClassListByNotId($bindClass['consultClassId']);
+        }else{
+            $info = $model -> getConsultClassList();
+        }
+        $ret['allClass'] = $info;
+        $ret['hasClass'] = [];
+        if(isset($hasClass) && $hasClass!=[])
+            $ret['hasClass'] = $hasClass;
+        return $ret;
+    }
+
+    /**
+     * 修改插入用户绑定
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateBindClass($data){
+        $modelBind = new Model_WeConsultClassBind();
+        $info= $modelBind ->updateConsultClassBind($data);
+        return $info;
+    }
+
+    /**
+     * 修改轮换板
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateBanner($data){
+        $model = new Model_WeBanner();
+        $info= $model ->updateBanner($data);
+        return $info;
+    }
+
+    /**
+     * 添加轮换板
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertBanner($data){
+
+        $model = new Model_WeBanner();
+        $info = $model -> insertBanner($data);
+        return $info;
+    }
+
+    /**
+     * 修改咨询
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateConsult($data){
+        $model = new Model_WeConsult();
+        if(isset($data["authorId"])){
+            $modelAuthor = new Model_WeConsultAuthor();
+            $hasAuthor = $modelAuthor -> getAuthor(['id' => $data["authorId"]]);
+            if($hasAuthor == null)
+                return DI()->ResCode->get("WE.authorError");
+        }
+        if(isset($data['classId'])){
+            $modelClass = new Model_WeConsultClass();
+            $hasClass = $modelClass -> getConsultClassListById($data['classId']);
+            if($hasClass == null)
+                return DI()->ResCode->get("WE.classError");
+        }
+        if(isset($data['recommendId'])){
+            $modelRecommend = new Model_WeRecommend();
+            $hasRecommend = $modelRecommend -> getRecommend($data['recommendId']);
+            if($hasRecommend == null){
+                return DI()->ResCode->get("WE.recommendError");
+            }
+        }
+        $info= $model ->updateConsult($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 添加咨询
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertConsult($data){
+        $model = new Model_WeConsult();
+        $modelAuthor = new Model_WeConsultAuthor();
+        $hasAuthor = $modelAuthor -> getAuthor(['id' => $data["authorId"]]);
+//        print_r($hasAuthor);exit;
+        if($hasAuthor == null)
+            return DI()->ResCode->get("WE.authorError");
+        $modelClass = new Model_WeConsultClass();
+        $hasClass = $modelClass -> getConsultClassListById($data['classId']);
+        if($hasClass == null)
+            return DI()->ResCode->get("WE.classError");
+        if($data['recommendId']){
+            $modelRecommend = new Model_WeRecommend();
+            $hasRecommend = $modelRecommend -> getRecommend($data['recommendId']);
+            if($hasRecommend == null){
+                return DI()->ResCode->get("WE.recommendError");
+            }
+        }
+
+        $info = $model -> insertConsult($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 作者列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function AuthorList($allParams){
+        $model = new Model_WeConsultAuthor();
+        $sql = "";
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        $allPage = $model -> getAuthorPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER BY createTime desc
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getAuthorList($sql);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        $ret['allPage'] = $allPage;
+        return $ret;
+    }
+
+    /**
+     * 添加作者
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertConsultAuthor($data){
+        $model = new Model_WeConsultAuthor();
+        $info = $model -> insertAuthor($data);
+        return $info;
+    }
+
+    /**
+     * 删除作者
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteConsultAuthor($data){
+        $model = new Model_WeConsultAuthor();
+        $info = $model -> deleteAuthor($data);
+        return $info;
+    }
+
+    /**
+     * 删除作者
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateConsultAuthor($data){
+        $model = new Model_WeConsultAuthor();
+        $info = $model -> updateAuthor($data);
+        return $info;
+    }
+
+    /**
+     * 插入评论
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertComment($data){
+        if($data['type'] == 1)
+            $consultModel = new Model_WeConsult();
+        if($data['type'] == 3)
+            $consultModel = new Model_WeNewConsult();
+        if($data['type'] == 2)
+            $consultModel = new Model_WeVideoConsult();
+        if(!isset($consultModel))
+            return DI()->ResCode->get("WE.Error");
+        $consult = $consultModel ->getConsultDetail($data['fid']);
+        if($consult == null)
+            return DI()->ResCode->get("WE.Error");
+        $model = new Model_WeComment();
+        $info = $model -> insertComment($data);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        return $res;
+    }
+
+    /**
+     * 删除评论
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteComment($data){
+        $model = new Model_WeComment();
+        $commentData = $model -> getComment($data['id']);
+        if($commentData == null || $commentData['status'] = 0)
+            return null;
+        if($commentData['userId']!=DI()->user['id'])
+            return null;
+        $info = $model -> deleteComment($data['id']);
+        return $info;
+    }
+
+    /**
+     * 后台删除评论
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function BackDeleteComment($data){
+        $model = new Model_WeComment();
+        $commentData = $model -> getComment($data['id']);
+        if($commentData == null || $commentData['status'] = 0)
+            return null;
+        $info = $model -> deleteComment($data['id']);
+        return $info;
+    }
+
+    /**
+     * 获取帖子列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function CommentList($allParams){
+        $model = new Model_WeComment;
+        $info = $model -> getCommentList($allParams);
+        return $info;
+    }
+
+    /**
+     * 获取帖子列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function BackCommentList($allParams){
+        $model = new Model_WeComment;
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        $sql = " && a.fid = {$allParams['fid']} && a.type =  {$allParams['type']} && a.status = 1 ";
+        $allPage = $model -> getBackCommentPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER BY a.updateTime desc
+Limit {$limitStart},{$limitEnd}";
+        $info = $model -> getBackCommentList($sql);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $info;
+        $res['allPage'] = $allPage;
+        return $res;
+    }
+
+    /**
+     * 插入评论点赞
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertCommentLike($data){
+        $model = new Model_WeComment();
+        $commentData = $model -> getComment($data['fid']);
+        if($commentData == null || $commentData['status'] = 0)
+            return null;
+        $modelLike = new Model_WeCommentLike();
+        $commentDataLike =  $modelLike -> getCommentLike($data['fid'],DI()->user['id']);
+        if($commentDataLike != null)
+            return null;
+        $info = $modelLike -> insertCommentLike($data);
+        return $info;
+    }
+
+    /**
+     * 删除评论点赞
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-1
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteCommentLike($data){
+        $modelLike = new Model_WeCommentLike();
+        $commentDataLike =  $modelLike -> getCommentLike($data['fid'],DI()->user['id']);
+        if($commentDataLike == null || $commentDataLike['userId']!=DI()->user['id'])
+            return null;
+        $info = $modelLike -> deleteCommentLike($data['fid']);
+        return $info;
+    }
+
+    /**
+     * 推荐模板列表
+     * @param $allParams
+     * @return array
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function RecommendList($allParams){
+        $domain = new Model_WeRecommend();
+        $page = $allParams['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.def");
+        $limitStart = $limitEnd*$page;
+        $sql = "";
+        $allPage = $domain -> getRecommendPage($sql);
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER BY createTime desc
+Limit {$limitStart},{$limitEnd}";
+        $list = $domain -> getRecommendList($sql);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $list;
+        $ret['allPage'] = $allPage;
+        return $ret;
+    }
+
+
+    /**
+     * 新建推荐模板
+     * @param $data
+     * @return array
+     * @desc wjp 2017-1-4
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function insertRecommend($data){
+        $domain = new Model_WeRecommend();
+        $array = [];
+        $array[] = [$data['id1'],$data['type1']];
+        $array[] = [$data['id2'],$data['type2']];
+        $array[] = [$data['id3'],$data['type3']];
+        $json = json_encode($array);
+        if(!isset($data['recommendName']))
+            $data['recommendName'] = '';
+        $userInfo = $domain -> insertRecommend(['recommend'=>$json,'recommendName'=>$data['recommendName']]);
+        return $userInfo;
+    }
+
+    /**
+     * 删除推荐模板
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function deleteRecommend($data){
+        $domain = new Model_WeRecommend();
+        $userInfo = $domain -> deleteRecommend($data['id']);
+        return $userInfo;
+    }
+
+    /**
+     * 推荐模板修改
+     * @param $data
+     * @return array
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function updateRecommend($data){
+        $domain = new Model_WeRecommend();
+        $array = [];
+        $array[] = [$data['id1'],$data['type1']];
+        $array[] = [$data['id2'],$data['type2']];
+        $array[] = [$data['id3'],$data['type3']];
+        $json = json_encode($array);
+        if(!isset($data['recommendName']))
+            $userInfo = $domain -> updateRecommend($data['id'],['recommend'=>$json]);
+        else
+            $userInfo = $domain -> updateRecommend($data['id'],['recommend'=>$json,'recommendName'=>$data['recommendName']]);
+        return $userInfo;
+    }
+
+    /**
+     * 获取模板
+     * @param $id
+     * @return array
+     * @desc wjp 2017-12-27
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function getRecommend($id){
+        $key = 'DomainGetRecommend_'.$id;
+        $List = DI() -> redis -> getInfo($key);
+        if($List == null || $List == ''){
+            $domain = new Model_WeRecommend();
+            $recommend = $domain -> getRecommend($id);
+            if($recommend == null)
+                return [];
+            $json = json_decode($recommend['recommend']);
+            if(!is_array($json)||!isset($json[0][0])||!isset($json[0][1]))
+                return [];
+            $array = [];
+            foreach ($json as $item) {
+                if($item[1] == 1){ //咨询
+                    $modelConsult = new Model_WeConsult();
+                }
+                if($item[1] == 2){ //视频
+                    $modelConsult = new Model_WeVideoConsult();
+                }
+                if($item[1] == 3){ //网页
+                    return [];
+                }
+                if($item[1] == 4) { //快讯
+                    $modelConsult = new Model_WeNewConsult();
+                }
+                if($item[1] == 5) { //赛事
+                    return [];
+                }
+                if(isset($modelConsult)){
+                    $recommedCach = $modelConsult ->getConsultDetail($item[0]);
+                    $recommedCach['recommendType'] =  $item[1];
+                    $array[] = $recommedCach;
+                }
+            }
+            if($array == null)
+                return [];
+            DI() -> redis -> set_InfoTime($key,json_encode($array),300);
+        }else{
+            $array = json_decode($List,true);
+        }
+        return $array;
+    }
+}

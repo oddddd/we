@@ -1,0 +1,339 @@
+<?php
+/**
+ * WeUser.php
+ */
+class Domain_WeUser
+{
+
+    /**
+     * 用户注册
+     * @param $data
+     * @return array res
+     * @desc wjp 2017-12-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function Register($data){
+        $model = new Model_WeUser();
+        $tokenModel = new Model_UserToken();
+        $hasUser = $model -> get_logUserinfo($data['phone']);
+        if($hasUser != -1) {
+            $ret = DI()->ResCode->get("WE.hasUser");
+            return $ret;
+        }
+        unset($data['code']);
+
+        if(isset($data['invitationCode'])){
+            $hasFid = $model  -> getUserByCode($data['invitationCode']);
+            if($hasFid != null && isset($hasFid['id'])){
+                $data['fid'] = $hasFid['id'];
+            }
+        }
+
+
+        $userInfo = $model -> insertUser($data);
+        $token = md5($data['phone'].time().$data['id']);
+        $tokenModel->deleteToken($userInfo['id'],1);
+        $tokenModel->insertToken($userInfo['id'],1,$token);
+        DI() -> redis -> set_time($token,$userInfo['id'],3600);
+        $userInfo['accessToken'] = $token;
+        $res = DI()->ResCode->get("WE.Success");
+        $res["data"] = $userInfo;
+        return $res;
+    }
+
+    /**
+     * 用户登录
+     * @param $allParams
+     * @return array res
+     * @desc wjp 2018-1-2
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function Login($allParams){
+        $model = new Model_WeUser();
+        $tokenModel = new Model_UserToken();
+        $hasUser = $model -> getPhonePwd($allParams['phone'],$allParams['pwd1']);
+        if($hasUser == null || $hasUser == -1) {
+            $res = DI()->ResCode->get("WE.LoginError1");
+            return $res;
+        }
+        $token = md5($hasUser['phone'].time().$hasUser['id']);
+        $tokenModel->deleteToken($hasUser['id'],1);
+        DI() -> redis -> set_time($token,$hasUser['id'],3600);
+        $tokenModel->insertToken($hasUser['id'],1,$token);
+        $hasUser['accessToken'] = $token;
+
+        if(!isset($allParams['pushClientid']))
+            $allParams['pushClientid'] = null;
+        $model -> updateUser(['id'=>$hasUser['id'],'pushClientid'=>$allParams['pushClientid']]);
+        $res = DI()->ResCode->get("WE.Success");
+        $res['data'] = $hasUser;
+        return $res;
+    }
+
+    /**
+     * 用户登录验证码登录
+     * @param $allParams
+     * @return array res
+     * @desc wjp 2018-1-2
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function LoginCode($allParams){
+        $model = new Model_WeUser();
+        $tokenModel = new Model_UserToken();
+        $hasUser = $model -> get_logUserinfo($allParams['phone']);
+
+        if($hasUser == null || $hasUser == -1) {
+            $res = DI()->ResCode->get("WE.hasUser");
+            return $res;
+        }
+        $token = md5($hasUser['phone'].time().$hasUser['id']);
+        $tokenModel->deleteToken($hasUser['id'],1);
+        DI() -> redis -> set_time($token,$hasUser['id'],3600);
+        $tokenModel->insertToken($hasUser['id'],1,$token);
+        $hasUser['accessToken'] = $token;
+
+        if(!isset($allParams['pushClientid']))
+            $allParams['pushClientid'] = null;
+        $model -> updateUser(['id'=>$hasUser['id'],'pushClientid'=>$allParams['pushClientid']]);
+        $res = DI() -> ResCode -> get("WE.Success");
+        $res['data'] = $hasUser;
+        return $res;
+    }
+
+    /**
+     * 用户第三方登录 没有这个用户就注册
+     * @param $allParams
+     * @return array res
+     * @desc wjp 2018-1-2
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function LoginOther($allParams){
+
+        $model = new Model_WeUser();
+        $tokenModel = new Model_UserToken();
+        if(isset($allParams['type']))
+            $hasUser = $model -> getUserOther($allParams);
+        else
+            return DI()->ResCode->get("WE.lostError");
+        if($hasUser == null) {
+            switch ($allParams['type']){
+                case 1:
+                    if(!isset($allParams['wxOpenid']))
+                        return DI()->ResCode->get("WE.lostError");
+                    break;
+                case 2:
+                    if(!isset($allParams['qqOpenid']))
+                        return DI()->ResCode->get("WE.lostError");
+                    break;
+                case 3:
+                    if(!isset($allParams['sinaOpenid']))
+                        return DI()->ResCode->get("WE.lostError");
+                    break;
+                default:
+                    return DI()->ResCode->get("WE.lostError");
+            }
+            unset($allParams['type']);
+            if( !isset($allParams["nickName"]) || !isset($allParams["photo"]) || !isset($allParams["sex"])){
+                return DI()->ResCode->get("WE.lostError");
+            }
+            $model -> insertUser($allParams);
+            $hasUser = $model -> getUserOther($allParams);
+            if(!isset($hasUser['id']))
+                return DI()->ResCode->get("WE.Error");
+        }
+
+        $token = md5(rand(100000,999999).time().$hasUser['id']);
+        $tokenModel->deleteToken($hasUser['id'],1);
+        DI() -> redis -> set_time($token,$hasUser['id'],3600);
+        $tokenModel->insertToken($hasUser['id'],1,$token);
+        $hasUser['accessToken'] = $token;
+
+        if(!isset($allParams['pushClientid']))
+            $allParams['pushClientid'] = null;
+        $model -> updateUser(['id'=>$hasUser['id'],'pushClientid'=>$allParams['pushClientid']]);
+        $res = DI() -> ResCode -> get("WE.Success");
+        $res['data'] = $hasUser;
+        return $res;
+    }
+
+    /**
+     * 退出登录
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function LoginOut(){
+        $tokenModel = new Model_UserToken();
+        $token = $tokenModel->seletcToken(DI()->user['id'],1);
+        $tokenModel->deleteToken(DI()->user['id'],1);
+        if(isset($token['tokenCode'])){
+            DI() -> redis -> delInfo($token['tokenCode']);
+        }
+        return DI() -> ResCode -> get("WE.Success");
+    }
+
+    /**
+     * 修改密码
+     * @param $data
+     * @return mixed
+     */
+    public function ChangePWD($data){
+        $model = New Model_User();
+        if(!isset($_SESSION['user_info']))
+            return DI()->ResCode->get("GZH.LoginError5");
+        $user_info = $model -> selectOne(['game_id'=>$_SESSION['user_info']['game_id']]);
+        if($user_info['pwd'] != md5($data['pwd']))
+            return DI()->ResCode->get("GZH.LoginError3");
+        $model -> Update(['game_id'=>$_SESSION['user_info']['game_id']],['pwd'=>md5($data['new_pwd'])]);
+        return DI()->ResCode->get("GZH.Success");
+    }
+
+    /**
+     * 消息列表
+     * @param $data
+     * @return mixed
+     */
+    public function MsgList($data){
+        $model = new Model_WeMsg();
+        $info = $model -> getList($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 删除消息
+     * @param $data
+     * @return mixed
+     */
+    public function deleteMsg($data){
+        $model = new Model_WeMsg();
+        $info = $model -> deleteMsg($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 插入意见反馈
+     * @param $data
+     * @return mixed
+     */
+    public function MakeFeedback($data){
+        $model = new Model_WeFeedback();
+        $data['userId'] = DI()->user['id'];
+        $data['type'] = 1;
+        $info = $model -> insertData($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 插入意见反馈
+     * @param $data
+     * @return mixed
+     */
+    public function FeedbackList($data){
+        $model = new Model_WeFeedback();
+        $info = $model -> getList($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+    /**
+     * 插入意见反馈
+     * @param $data
+     * @return mixed
+     */
+    public function updateFeedback($data){
+        $model = new Model_WeFeedback();
+        $info = $model -> updateData($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 插入意见反馈
+     * @param $data
+     * @return mixed
+     */
+    public function updateUser($data){
+        $model = new Model_WeUser();
+        $data['id'] = DI()->user['id'];
+        $info = $model -> updateUser($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 用户列表
+     * @param $data
+     * @return mixed
+     */
+    public function getUserList($data){
+        $model = new Model_WeUser();
+
+        $sql = " where status <> '' ";
+        if(isset($data['find']))
+            $sql .= " && (nickName LIKE '%{$data['find']}%' || phone LIKE '%{$data['find']}%') ";
+        if(isset($data['startTime']))
+            $sql .= " && createTime > '{$data['startTime']}' ";
+        if(isset($data['endTime']))
+            $sql .= " && createTime < '{$data['endTime']}' ";
+        $page = $data['page'];
+        $page = $page - 1;
+        if($page < 0)
+            return null;
+        $limitEnd = DI()->config->get("app.page.backDef");
+        $limitStart = $limitEnd*$page;
+        $allPage = $model -> getUserPage($sql);
+
+        $allPage = isset($allPage['page'])?ceil($allPage['page']/$limitEnd):1;
+        $sql .= " ORDER by createTime DESC Limit {$limitStart},{$limitEnd}";
+
+        $info = $model -> getUserList($sql);
+
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        $ret['allPage'] = $allPage;
+        return $ret;
+    }
+
+    /**
+     * 用户禁言
+     * @param $data
+     * @return mixed
+     */
+    public function UserGag($data){
+        $model = new Model_WeUser();
+        $info = $model -> updateUser($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+
+    /**
+     * 用户绑定电话
+     * @param $data
+     * @return mixed
+     */
+    public function bindPhone($data){
+        $model = new Model_WeUser();
+        $data['id'] = DI()->user['id'];
+        $has = $model -> get_logUserinfo($data['phone']);
+        if($has != null)
+            return DI()->ResCode->get("WE.hasUser");
+        if( isset($data['invitationCode']) && $has['fid'] != null && $has['fid'] != 0 ){
+            $hasFid = $model  -> getUserByCode($data['invitationCode']);
+            if($hasFid != null && isset($hasFid['id'])){
+                $data['fid'] = $hasFid['id'];
+            }
+        }
+        unset($data['code']);
+        $info = $model -> updateUser($data);
+        $ret = DI()->ResCode->get("WE.Success");
+        $ret['data'] = $info;
+        return $ret;
+    }
+}

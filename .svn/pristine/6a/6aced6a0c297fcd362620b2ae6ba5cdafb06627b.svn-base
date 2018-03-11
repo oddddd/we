@@ -1,0 +1,10 @@
+<?php
+$host = "http://api.wevsport.com/";
+$matchUrl = $host."?service=BackData.EndMatch";
+$newsLqUrl = $host."?service=BackConsult.GainNewConsultList";
+$newsZqUrl = $host."?service=BackConsult.GainNewZqConsultList";
+
+$log1 = file_get_contents($matchUrl);
+$log2= file_get_contents($newsLqUrl);
+$log3= file_get_contents($newsZqUrl);
+echo $log1."   ".$log2."    ".$log3."    ";

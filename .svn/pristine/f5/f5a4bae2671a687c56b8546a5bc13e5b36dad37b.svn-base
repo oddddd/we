@@ -1,0 +1,58 @@
+<?php
+/**
+ * WeTask.php
+ */
+class Domain_WeTask
+{
+    /**
+     * 用户签到
+     * @return array res
+     * @desc wjp 2018-2-26
+     * @throws PhalApi_Exception_InternalServerError
+     */
+    public function SignIn(){
+        $model = new Model_WeSingIn();
+        $moneyModel = new Model_WeUserWallet();
+        $configModel = new Model_WeConfig();
+        $domain = new Domain_WeMoney();
+        $userId = DI()->user['id'];
+        $date = date("Y-m-d");
+        $hasSignIn = $model -> getInfoByUserId($userId,$date);
+        if($hasSignIn != null)
+            return DI()->ResCode->get("WE.HasSignIn");
+        $beforeDate = date("Y-m-d",strtotime("-1 day"));
+        $hasBefore = $model -> getInfoByUserId($userId,$beforeDate);
+        $wallet = $domain ->getUserWallet(['userId' => $userId,'walletId' => 2]);
+        $list = $configModel -> getConfigListByType(DI()->config->get('admin.taskConfig.SignIn'));
+        $cMoney = 0;
+        foreach ($list as $item) {
+           $configList[''] =
+        }
+        if($hasBefore == null){
+
+            $allParams = [
+                'userId' => $userId,
+                'useType' => 8,
+                'cMoney' => $cMoney,
+                'walletId' => 2,
+                'note' => $date.' 签到'
+            ];
+            $moneyModel -> updateInfo($wallet,$allParams);
+        }else{
+            foreach ($list as $item) {
+                if($item['configName'] == $hasBefore['nextDay'])
+                    $cMoney = $item['configData'];
+            }
+            $allParams = [
+                'userId' => $userId,
+                'useType' => 8,
+                'cMoney' => $cMoney,
+                'walletId' => 2,
+                'note' => $date.' 签到'
+            ];
+            $moneyModel -> updateInfo($wallet,$allParams);
+        }
+        return $res;
+    }
+
+}
