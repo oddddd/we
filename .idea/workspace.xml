@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="976c5770-b628-4b06-8adf-8acd7f9ac6eb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Config/sys.php" afterPath="$PROJECT_DIR$/Config/sys.php" />
-    </list>
+    <list default="true" readonly="true" id="976c5770-b628-4b06-8adf-8acd7f9ac6eb" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,41 +14,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BackConsult.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Api/BackConsult.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="239" column="33" lean-forward="true" selection-start-line="239" selection-start-column="33" selection-end-line="239" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BackData.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BackData.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/we/Api/BackData.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="124" column="5" lean-forward="false" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
+            <state relative-caret-position="169">
+              <caret line="133" column="25" lean-forward="false" selection-start-line="133" selection-start-column="25" selection-end-line="133" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WeConsult.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Domain/WeConsult.php">
+      <file leaf-file-name="WeData.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/we/Domain/WeData.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
+            <state relative-caret-position="193">
+              <caret line="83" column="54" lean-forward="true" selection-start-line="83" selection-start-column="54" selection-end-line="83" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Lite.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Lite.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Library/PhpSimple/Lite.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="216" column="40" lean-forward="false" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="40" />
+            <state relative-caret-position="114">
+              <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -66,60 +54,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="init.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Config/init.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="1238" column="56" lean-forward="false" selection-start-line="1238" selection-start-column="56" selection-end-line="1238" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dbs.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Config/dbs.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="32" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Lite.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Library/Bzy/Lite.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="74" column="24" lean-forward="false" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="sys.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Config/sys.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="32" column="34" lean-forward="false" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+            <state relative-caret-position="274">
+              <caret line="36" column="16" lean-forward="true" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WeConsultAuthor.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/we/Model/WeConsultAuthor.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="94" column="29" lean-forward="true" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
-              <folding>
-                <marker date="1520590199000" expanded="true" signature="751:799" ph="select * fro... we_consultAuthor" />
-                <marker date="1520590199000" expanded="true" signature="1355:1410" ph="select count... we_consultAuthor" />
-                <marker date="1520590199000" expanded="true" signature="1965:2007" ph="select * fro... we_consultAuthor" />
-                <marker date="1520590199000" expanded="true" signature="2564:2621" ph="select * fro... we_consultAuthor" />
-                <marker date="1520590199000" expanded="true" signature="2564:2622" ph="select * fro... we_consultAuthor" />
-                <marker date="1520590199000" expanded="true" signature="2564:2630" ph="select * fro... we_consultAuthor" />
-                <marker date="1520590199000" expanded="true" signature="4382:4430" ph="update we_co... " />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -128,7 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>insertVideoConsult</find>
       <find>LiveStreamBindList</find>
       <find>makeLiveStreamBind</find>
       <find>comment</find>
@@ -146,7 +85,6 @@
       <find>userId</find>
       <find>bannerList</find>
       <find>MatchListAfter</find>
-      <find>getList</find>
       <find>array_reverse</find>
       <find>MatchListBefore</find>
       <find>快讯</find>
@@ -157,7 +95,9 @@
       <find>GainNewConsultList</find>
       <find>list</find>
       <find>&amp;ldquo;</find>
+      <find>getList</find>
       <find>GainNewZqConsultList</find>
+      <find>getMatchDetail</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/we/Model</dir>
@@ -203,7 +143,6 @@
         <option value="$PROJECT_DIR$/PhalApi/PhalApi/Cache/Redis.php" />
         <option value="$PROJECT_DIR$/Public/we/loop.php" />
         <option value="$PROJECT_DIR$/Library/Bzy/Lite.php" />
-        <option value="$PROJECT_DIR$/we/Domain/WeData.php" />
         <option value="$PROJECT_DIR$/Public/init.php" />
         <option value="$PROJECT_DIR$/Config/init.sql" />
         <option value="$PROJECT_DIR$/Config/init2.0.sql" />
@@ -214,12 +153,13 @@
         <option value="$PROJECT_DIR$/we/Model/WeNewConsultClass.php" />
         <option value="$PROJECT_DIR$/we/Model/WeNewConsult.php" />
         <option value="$PROJECT_DIR$/we/Api/BackConsult.php" />
-        <option value="$PROJECT_DIR$/Library/PhpSimple/Lite.php" />
         <option value="$PROJECT_DIR$/we/Domain/WeConsult.php" />
         <option value="$PROJECT_DIR$/Public/we/endMatch.php" />
         <option value="$PROJECT_DIR$/Config/dbs.php" />
-        <option value="$PROJECT_DIR$/Config/sys.php" />
         <option value="$PROJECT_DIR$/we/Api/BackData.php" />
+        <option value="$PROJECT_DIR$/Config/sys.php" />
+        <option value="$PROJECT_DIR$/we/Domain/WeData.php" />
+        <option value="$PROJECT_DIR$/Library/PhpSimple/Lite.php" />
       </list>
     </option>
   </component>
@@ -263,11 +203,6 @@
             <path>
               <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
               <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Config" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Library" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -286,33 +221,6 @@
               <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
               <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Cache" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Filter" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wevsport" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="PhalApi" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Helper" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="wevsport" type="b2602c69:ProjectViewProjectNode" />
@@ -403,7 +311,7 @@
       <workItem from="1517558262676" duration="135375000" />
       <workItem from="1519718811027" duration="16798000" />
       <workItem from="1519826288152" duration="603000" />
-      <workItem from="1519827144162" duration="80864000" />
+      <workItem from="1519827144162" duration="87059000" />
     </task>
     <task id="LOCAL-00001">
       <created>1517558458038</created>
@@ -416,7 +324,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="234111000" />
+    <option name="totallyTimeSpent" value="240306000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -429,8 +337,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
+      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22532189" sideWeight="0.49369368" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.49427754" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29504234" sideWeight="0.51287556" order="7" side_tool="true" content_ui="tabs" />
@@ -439,7 +347,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2261185" sideWeight="0.48569384" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29504234" sideWeight="0.48712447" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29504234" sideWeight="0.48712447" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24964234" sideWeight="0.5063063" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -786,22 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeData.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="292" column="5" lean-forward="true" selection-start-line="292" selection-start-column="5" selection-end-line="292" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Public/init.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="55" column="13" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PhalApi/PhalApi/Cache/Redis.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="583">
@@ -923,14 +815,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Library/PhpSimple/Lite.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="216" column="40" lean-forward="false" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Public/we/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -939,34 +823,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/we/Domain/WeConsult.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="60" column="54" lean-forward="false" selection-start-line="60" selection-start-column="54" selection-end-line="60" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Public/we/endMatch.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Config/init.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="1238" column="56" lean-forward="false" selection-start-line="1238" selection-start-column="56" selection-end-line="1238" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Config/sys.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="32" column="34" lean-forward="false" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+        <state relative-caret-position="274">
+          <caret line="36" column="16" lean-forward="true" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/Bzy/Lite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="20" lean-forward="true" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -979,26 +847,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Library/Bzy/Lite.php">
+    <entry file="file://$PROJECT_DIR$/Config/init.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="74" column="24" lean-forward="false" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="24" />
+        <state relative-caret-position="77">
+          <caret line="1228" column="30" lean-forward="true" selection-start-line="1228" selection-start-column="30" selection-end-line="1228" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Public/we/endMatch.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/we/Api/BackConsult.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="239" column="33" lean-forward="true" selection-start-line="239" selection-start-column="33" selection-end-line="239" selection-end-column="33" />
+        <state relative-caret-position="165">
+          <caret line="227" column="32" lean-forward="true" selection-start-line="227" selection-start-column="32" selection-end-line="227" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeConsult.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Public/init.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="55" column="13" lean-forward="false" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/we/Api/BackData.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="124" column="5" lean-forward="false" selection-start-line="124" selection-start-column="5" selection-end-line="124" selection-end-column="5" />
+        <state relative-caret-position="169">
+          <caret line="133" column="25" lean-forward="false" selection-start-line="133" selection-start-column="25" selection-end-line="133" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/we/Domain/WeData.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="83" column="54" lean-forward="true" selection-start-line="83" selection-start-column="54" selection-end-line="83" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Library/PhpSimple/Lite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
           <folding />
         </state>
       </provider>

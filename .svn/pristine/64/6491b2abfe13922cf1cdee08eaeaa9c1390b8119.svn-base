@@ -19,7 +19,7 @@ class PhpSimple__Lite{
      * @param $dateList
      */
     public function getZqList($dateList){
-        $url = "http://cms.8win.com";
+        $url = "http://cms.8win.com/";
         $urlList = [];
         foreach ($dateList as $item) {
             $data = file_get_contents($item);

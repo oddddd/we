@@ -78,14 +78,15 @@ class Domain_WeData
     }
 
     /**
-     * 章鱼彩票爬取当日足球比赛
+     * 爬取当日足球比赛
      */
     public function CrawlerZq(){
-        $url = "http://cms.8win.com/data?selectDate=";
-        $dateList[] = $url.date("Y-m-d");
-        $dateList[] = $url.date("Y-m-d",strtotime("+1 day"));
-        $dateList[] = $url.date("Y-m-d",strtotime("+2 day"));
-        DI()->matchPs->getZqList($dateList);
+        $dateList[] = $date = date("Y-m-d");
+        $dateList[] = $date = date("Y-m-d",strtotime("+1 day"));
+        $dateList[] = $date = date("Y-m-d",strtotime("+2 day"));
+        print_r($dateList);exit;
+        http://cms.8win.com/data?selectDate=2018-03-12
+
     }
 
     /**

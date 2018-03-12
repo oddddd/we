@@ -19,19 +19,14 @@ class PhpSimple__Lite{
      * @param $dateList
      */
     public function getZqList($dateList){
-        $url = "http://cms.8win.com";
-        $urlList = [];
         foreach ($dateList as $item) {
+//            echo $item;exit;
             $data = file_get_contents($item);
             $dom = $this -> HtmlDomParser -> str_get_html($data);
-            foreach ($dom -> getElementById('matchList')->children() as $html_dom_node) {
-                $href = $html_dom_node -> getElementByTagName('.zhu') -> first_child() -> href;
-                if($href != null && $href != '') {
-                    $urlList[] = $url.$href;
-                }
+            foreach ($dom -> getElementById('listL') as $html_dom_node) {
+                echo $html_dom_node;exit;
             }
         }
-        print_r($urlList);exit;
     }
 
     /**
